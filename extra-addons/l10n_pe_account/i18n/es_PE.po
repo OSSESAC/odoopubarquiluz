@@ -1,0 +1,333 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+#	* l10n_pe_account
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0alpha\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-11-13 01:01+0000\n"
+"PO-Revision-Date: 2012-11-13 01:01+0000\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: l10n_pe_account
+#: model:ir.ui.menu,name:l10n_pe_account.sunat_menu
+msgid "SUNAT Reports"
+msgstr "Reportes SUNAT"
+
+#. module: l10n_pe_account
+#: code:addons/l10n_pe_account/partner.py:83
+#, python-format
+msgid "Cedula diplomatica should be numeric, exactly 15 numbers long! Please check!"
+msgstr "La Cedula diplomatica debe ser numérica, de exactamente 15 caracteres de largo! Por favor revisar!"
+
+#. module: l10n_pe_account
+#: model:ir.model,name:l10n_pe_account.model_account_invoice
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: l10n_pe_account
+#: model:ir.actions.act_window,name:l10n_pe_account.sunat_1_1_action
+msgid "SUNAT 1.1 Cash"
+msgstr "SUNAT 1.1 Efectivo"
+
+#. module: l10n_pe_account
+#: field:sunat.file_save,output_name:0
+msgid "Filename"
+msgstr "Nombre de archivo"
+
+#. module: l10n_pe_account
+#: code:addons/l10n_pe_account/sunat.py:73
+#, python-format
+msgid "Save output file"
+msgstr "Guardar el archivo de salida"
+
+#. module: l10n_pe_account
+#: code:addons/l10n_pe_account/partner.py:60
+#: code:addons/l10n_pe_account/partner.py:64
+#: code:addons/l10n_pe_account/partner.py:68
+#: code:addons/l10n_pe_account/partner.py:72
+#: code:addons/l10n_pe_account/partner.py:78
+#: code:addons/l10n_pe_account/partner.py:82
+#, python-format
+msgid "Value error"
+msgstr "Error de valor"
+
+#. module: l10n_pe_account
+#: code:addons/l10n_pe_account/partner.py:65
+#, python-format
+msgid "Libreta electoral or DNI should be numeric, exactly 8 numbers long! Please check!"
+msgstr "La Libreta electoral o DNI debe ser numérico, de exactamente 8 números! Por favor revisar!"
+
+#. module: l10n_pe_account
+#: field:sunat.report_efectivo_1_1,debit:0
+msgid "Debit"
+msgstr "Débito"
+
+#. module: l10n_pe_account
+#: view:sunat.file_save:0
+msgid "This file was generated using the SUNAT specifications."
+msgstr "Este archivo fue generado de acuerdo a las especificaciones del SUNAT."
+
+#. module: l10n_pe_account
+#: selection:sunat.report_efectivo_1_1,state:0
+msgid "Previous period, not registered"
+msgstr "Período anterior, no registrado"
+
+#. module: l10n_pe_account
+#: selection:sunat.report_efectivo_1_1,state:0
+msgid "Previous period, registered"
+msgstr "Período anterior, registrado"
+
+#. module: l10n_pe_account
+#: model:ir.actions.report.xml,name:l10n_pe_account.report_account_credit_print
+msgid "Credit Note Print"
+msgstr "Nota de Crédito"
+
+#. module: l10n_pe_account
+#: view:sunat.report_efectivo_1_1.export:0
+msgid "or"
+msgstr "o"
+
+#. module: l10n_pe_account
+#: field:sunat.report_efectivo_1_1,free8:0
+msgid "Free 8"
+msgstr "Libre 8"
+
+#. module: l10n_pe_account
+#: field:sunat.report_efectivo_1_1,description:0
+msgid "Description"
+msgstr "Descripción"
+
+#. module: l10n_pe_account
+#: model:ir.model,name:l10n_pe_account.model_sunat_base
+msgid "sunat.base"
+msgstr "sunat.base"
+
+#. module: l10n_pe_account
+#: field:sunat.report_efectivo_1_1,company_id:0
+msgid "Company"
+msgstr "Compañía"
+
+#. module: l10n_pe_account
+#: report:account.credit.print:0
+#: report:account.debit.print:0
+#: report:account.invoice.print:0
+#: report:account.ticket.print:0
+msgid "-"
+msgstr "-"
+
+#. module: l10n_pe_account
+#: model:ir.actions.report.xml,name:l10n_pe_account.report_account_invoice_print
+msgid "Invoice Print"
+msgstr "Factura Impresa"
+
+#. module: l10n_pe_account
+#: model:ir.ui.menu,name:l10n_pe_account.sunat_1_1_menu
+msgid "Report_1_1"
+msgstr "Report_1_1"
+
+#. module: l10n_pe_account
+#: view:sunat.file_save:0
+msgid "Here is the exported SUNAT file:"
+msgstr "Este es el archivo SUNAT exportado:"
+
+#. module: l10n_pe_account
+#: model:ir.model,name:l10n_pe_account.model_sunat_report_efectivo_1_1
+msgid "sunat.report_efectivo_1_1"
+msgstr "sunat.report_efectivo_1_1"
+
+#. module: l10n_pe_account
+#: field:res.partner,doc_number:0
+msgid "Doc Number"
+msgstr "Número de documento"
+
+#. module: l10n_pe_account
+#: view:sunat.report_efectivo_1_1:0
+msgid "1.1 Efectivo"
+msgstr "1.1 Efectivo"
+
+#. module: l10n_pe_account
+#: field:sunat.report_efectivo_1_1,account_id:0
+msgid "Account"
+msgstr "Cuenta"
+
+#. module: l10n_pe_account
+#: field:sunat.report_efectivo_1_1,free10:0
+msgid "Free 10"
+msgstr "Libre 10"
+
+#. module: l10n_pe_account
+#: field:sunat.file_save,output_file:0
+msgid "Output file"
+msgstr "Archivo de salida"
+
+#. module: l10n_pe_account
+#: field:sunat.report_efectivo_1_1,state:0
+msgid "Operation state"
+msgstr "Estado de la operación"
+
+#. module: l10n_pe_account
+#: model:ir.actions.report.xml,name:l10n_pe_account.report_account_debit_print
+msgid "Debit Note Print"
+msgstr "Nota de Débito"
+
+#. module: l10n_pe_account
+#: field:sunat.report_efectivo_1_1,credit:0
+msgid "Credit"
+msgstr "Crédito"
+
+#. module: l10n_pe_account
+#: model:ir.model,name:l10n_pe_account.model_sunat_file_save
+msgid "sunat.file_save"
+msgstr "sunat.file_save"
+
+#. module: l10n_pe_account
+#: field:sunat.report_efectivo_1_1,record_id:0
+msgid "Record id"
+msgstr "Identificador"
+
+#. module: l10n_pe_account
+#: view:sunat.report_efectivo_1_1.export:0
+msgid "If you confirm the export a text file following\n"
+"                        SUNAT specifications will be generated on selected\n"
+"                        records (and ONLY on selected records!!)."
+msgstr "Si Usted confirma esta exportación, se generará un archivo según las\n"
+"                        especificaciones del SUNAT, usando los registros\n"
+"                        seleccionados (y SOLAMENTE los seleccionados!)."
+
+#. module: l10n_pe_account
+#: model:ir.model,name:l10n_pe_account.model_res_partner
+msgid "Partner"
+msgstr "Empresa"
+
+#. module: l10n_pe_account
+#: model:ir.actions.report.xml,name:l10n_pe_account.report_account_ticket_print
+msgid "Bill of Sale Print"
+msgstr "Boleta Impresa"
+
+#. module: l10n_pe_account
+#: code:addons/l10n_pe_account/partner.py:73
+#, python-format
+msgid "RUC should be numeric, exactly 8 numbers long! Please check!"
+msgstr "El RUC debe ser numérico, de exactamente 8 números! Por favor revisar"
+
+#. module: l10n_pe_account
+#: view:sunat.file_save:0
+msgid "Export Complete"
+msgstr "Exportación completa"
+
+#. module: l10n_pe_account
+#: view:sunat.report_efectivo_1_1:0
+msgid "SUNAT 1.1 Efectivo"
+msgstr "SUNAT 1.1 Efectivo"
+
+#. module: l10n_pe_account
+#: code:addons/l10n_pe_account/partner.py:61
+#, python-format
+msgid "Document number should be alfanumeric, not longer than 15 characters! Please check!"
+msgstr "El número de documento debe ser alfanumérico, de no más de 15 caracteres de largo! Por favor revisar"
+
+#. module: l10n_pe_account
+#: sql_constraint:account.invoice:0
+msgid "Invoice Number must be unique per Company!"
+msgstr "¡El número de factura debe ser único por empresa!"
+
+#. module: l10n_pe_account
+#: code:addons/l10n_pe_account/partner.py:79
+#, python-format
+msgid "Pasaporte should be alfanumeric, not longer than 12 characters! Please check!"
+msgstr "El pasaporte debe ser alfanumérico, de no más de 12 caracteres! Por favor revisar"
+
+#. module: l10n_pe_account
+#: model:ir.model,name:l10n_pe_account.model_sunat_report_efectivo_1_1_export
+msgid "sunat.report_efectivo_1_1.export"
+msgstr "sunat.report_efectivo_1_1.export"
+
+#. module: l10n_pe_account
+#: model:ir.actions.act_window,name:l10n_pe_account.sunat_1_1_export_action
+#: view:sunat.report_efectivo_1_1.export:0
+msgid "Export SUNAT 1.1"
+msgstr "Exportar SUNAT 1.1"
+
+#. module: l10n_pe_account
+#: field:sunat.report_efectivo_1_1,period:0
+msgid "Period"
+msgstr "Período"
+
+#. module: l10n_pe_account
+#: code:addons/l10n_pe_account/partner.py:69
+#, python-format
+msgid "Carnet de extranjeria should be alfanumeric, not longer than 12 characters! Please check!"
+msgstr "El Carnet de extranjeria debe ser alfanumérico, de no más de 12 caracteres! Por favor revisar"
+
+#. module: l10n_pe_account
+#: selection:sunat.report_efectivo_1_1,state:0
+msgid "Within period"
+msgstr "Dentro del período"
+
+#. module: l10n_pe_account
+#: field:sunat.report_efectivo_1_1,free14:0
+msgid "Free 14"
+msgstr "Libre 14"
+
+#. module: l10n_pe_account
+#: field:sunat.report_efectivo_1_1,free12:0
+msgid "Free 12"
+msgstr "Libre 12"
+
+#. module: l10n_pe_account
+#: field:sunat.report_efectivo_1_1,free13:0
+msgid "Free 13"
+msgstr "Libre 13"
+
+#. module: l10n_pe_account
+#: field:res.partner,doc_type:0
+msgid "Doc type"
+msgstr "Tipo de documento"
+
+#. module: l10n_pe_account
+#: field:sunat.report_efectivo_1_1,free11:0
+msgid "Free 11"
+msgstr "Libre 11"
+
+#. module: l10n_pe_account
+#: view:sunat.report_efectivo_1_1.export:0
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: l10n_pe_account
+#: view:res.partner:0
+msgid "Accounting"
+msgstr "Contabilidad"
+
+#. module: l10n_pe_account
+#: view:sunat.report_efectivo_1_1.export:0
+msgid "Export records"
+msgstr "Exportar registros"
+
+#. module: l10n_pe_account
+#: field:sunat.report_efectivo_1_1,operation_date:0
+msgid "Operation's date"
+msgstr "Fecha de la operación"
+
+#. module: l10n_pe_account
+#: view:sunat.file_save:0
+msgid "Export SUNAT Files"
+msgstr "Exportar archivos SUNAT"
+
+#. module: l10n_pe_account
+#: field:sunat.report_efectivo_1_1,free9:0
+msgid "Free 9"
+msgstr "Libre 9"
+
+#. module: l10n_pe_account
+#: field:sunat.report_efectivo_1_1,journal_id:0
+msgid "Journal"
+msgstr "Diario"
+

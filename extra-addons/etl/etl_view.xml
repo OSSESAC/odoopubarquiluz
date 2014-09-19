@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>		
+	    <menuitem name='ETL Extract Transform and Load' id = 'etl_menu' parent='base.menu_custom' sequence='15'/>
+	    
+	    <record id="view_etl_job_tree" model="ir.ui.view">
+			<field name="name">ETL Job List</field>
+			<field name="model">etl.job</field>
+			<field name="arch" type="xml">
+			    <tree string="ETL Job List" colors="grey:type=='per-call';blue:state=='ready';red:state=='run'">
+					<field name="name"/>
+					<field name="type" invisible="1"/>
+					<field name="src_server_id"/>
+					<field name="dst_server_id"/>
+					<field name="load_model_id"/>
+					<field name="date"/>
+					<field name="state"/>
+			    </tree>
+			</field>
+	    </record>
+	    <record id="view_etl_job_form" model="ir.ui.view">
+			<field name="name">ETL Job Form</field>
+			<field name="model">etl.job</field>
+			<field name="arch" type="xml">
+			    <form string="ETL Job" version="7.0">
+			    	<header>
+			    		<button name="action_ready" states="draft" type="object" string="Ready" class="oe_highlight"/>
+			    		<button name="action_draft" states="ready,done" type="object" string="Draft"/>
+			    		<button name="action_reprocess" states="done" type="object" string="Reprocess"
+			    			confirm="To reprocess is necesary define a pk column on your query. Are  you sure to reprocess this job?"/>
+			    		<button name="delete" states="done" type="object" string="Delete Loaded Data"
+			    			confirm="Are  you sure to delete all loaded data (logs and synchronized data)?"/>
+			    		<button name="action_run" attrs="{'invisible':['|',('state','!=','ready'),('type','!=','batch')]}"
+			    			type="object" string="Run Job"
+			    			confirm="We recomend use a system cron task to run large jobs using lib/etl_cron.py script. Are  you sure to run this job?"/>
+			    		<button name="action_done" attrs="{'invisible':['|',('state','!=','ready'),('type','!=','per-call')]}" 
+			    			type="object" string="Force to Done"
+			    			confirm="Make sure to all processes associated to this job was stopped or killed. Are  you sure to force this job to state done?"/>
+			    		<button name="action_done" states="run" type="object" string="Force to Done"
+			    			confirm="Make sure to all processes associated to this job was stopped or killed. Are  you sure to force this job to state done?"/>
+			    		<button name="button_load_model_data" states="ready,run,done" type="object" string="Show Loaded Data"/>
+			    		<field name="state" widget="statusbar"/>
+			    	</header>
+			    	<sheet>
+			    		<h1>
+	                        <label string="ETL Job "/>
+	                        <field name="name" class="oe_inline"/>
+	                    </h1>
+                        <group>
+                            <group>
+                            	<field name="src_server_id"/>
+								<field name="date"/>
+								<field name="date_start" attrs="{'invisible':[('type','!=','batch')]}"/>
+								<field name="date_end" attrs="{'invisible':[('type','!=','batch')]}"/>
+								<field name="reprocess" attrs="{'invisible':[('type','!=','batch')]}"/>
+			    			</group>
+			    			<group>
+			    				<field name="dst_server_id"/>
+			    				<field name="load_model_id"/>
+								<field name="type"/>
+								<field name="local_server_id"/>
+			    			</group>
+			    		</group>
+			    		<notebook>
+			    			<page string="Logs">
+			    				<field name="log_ids">
+			    					<tree string="Logs" colors="red:level=='error';blue:level=='warning'">
+			    						<field name="name"/>
+			    						<field name="level" invisible="1"/>
+			    						<field name="log"/>
+			    						<field name="model_id"/>
+			    						<field name="pk"/>
+			    						<field name="check"/>
+			    					</tree>
+			    				</field>
+			    			</page>
+			    			<page string="Query">
+			    				<group>
+			    					<field name="query_begin"/>
+			    					<field name="query_begin_delay"/>
+			    				</group>
+			    				<field name="query"/>
+			    				<group col="6">
+									<group>
+			    						<button name="do_query" states="draft,ready" type="object" string="Execute Query"/>
+			    					</group>
+			    					<group>
+			    						<field name="query_result_size"  class="oe_inline"/>
+			    					</group>
+		    						<group>
+		    							<field name="query_encoding"/>
+		    						</group>
+			    				</group>
+			    				<group>
+			    					<field name="query_end"/>
+			    					<field name="row_default_value"/>
+			    				</group>
+			    				<field name="query_result"/>
+			    			</page>
+			    			<page string="Mappings">
+			    				<field name="mapping_ids" context="{'default_model_id':load_model_id}">
+			    					<tree string="Mapppings" editable="bottom">
+			    						<field name="field_id" domain="[('model_id','=',parent.load_model_id)]"
+			    							on_change="onchange_field(field_id,context)"/>
+			    						<field name="field_name"/>
+			    						<field name="value"/>
+			    						<field name="mapping_id"/>
+			    						<field name="field_type"/>
+			    						<field name="field_relation"/>
+			    						<field name="name_search"/>
+			    						<field name="search_null"/>
+			    						<field name="per_call_job_id"/>
+			    						<field name="sequence" string="Seq"/>
+			    					</tree>
+			    				</field>
+			    			</page>
+			    		</notebook>
+					</sheet>
+			    </form>
+			</field>
+	    </record>
+
+		<record model="ir.actions.act_window" id="etl_job_list_action">
+		    <field name="name">ETL Job</field>
+		    <field name="res_model">etl.job</field>
+		    <field name="view_type">form</field>
+		    <field name="view_mode">tree,form</field>
+	    </record>
+	    <menuitem name='ETL Job' id = 'etl_job_menu' parent='etl_menu' sequence='10' action="etl_job_list_action"/>
+	    
+	    <record id="view_etl_log_tree" model="ir.ui.view">
+			<field name="name">ETL Log List</field>
+			<field name="model">etl.log</field>
+			<field name="arch" type="xml">
+			    <tree string="ETL Log List" colors="red:level=='error';blue:level=='warning'">
+					<field name="job_id"/>
+					<field name="name"/>
+					<field name="level" invisible="1"/>
+					<field name="model_id"/>
+					<field name="log"/>
+					<field name="check"/>
+			    </tree>
+			</field>
+	    </record>
+	    <record id="view_etl_log_form" model="ir.ui.view">
+			<field name="name">ETL Log Form</field>
+			<field name="model">etl.log</field>
+			<field name="arch" type="xml">
+			    <form string="ETL Log" version="7.0">
+			    	<sheet>
+			    		<h1>
+			    			<field name="name"/>
+			    		</h1>
+                        <group>
+                            <group>
+                            	<field name="job_id"/>
+								<field name="level"/>
+								<field name="check"/>
+			    			</group>
+			    			<group>
+			    				<field name="model"/>
+			    				<field name="model_id"/>
+								<field name="pk"/>
+			    			</group>
+			    		</group>
+			    		<separator string="Details"/>
+						<field name="log"/>
+						<separator string="Traceback"/>
+						<field name="traceback"/>
+					</sheet>
+			    </form>
+			</field>
+	    </record>
+	    
+		<record model="ir.actions.act_window" id="etl_log_list_action">
+		    <field name="name">ETL Log</field>
+		    <field name="res_model">etl.log</field>
+		    <field name="view_type">form</field>
+		    <field name="view_mode">tree,form</field>
+	    </record>
+	    <menuitem name='ETL Log' id = 'etl_log_menu' parent='etl_menu' sequence='20' action="etl_log_list_action"/>
+	    
+	    <record id="view_etl_server_tree" model="ir.ui.view">
+			<field name="name">ETL Server List</field>
+			<field name="model">etl.server</field>
+			<field name="arch" type="xml">
+			    <tree string="ETL Server List">
+					<field name="name"/>
+					<field name="type"/>
+					<field name="str_connection"/>
+					<field name="host"/>
+					<field name="database"/>
+					<field name="local_server"/>
+			    </tree>
+			</field>
+	    </record>
+	    <record id="view_etl_server_form" model="ir.ui.view">
+			<field name="name">ETL Server Form</field>
+			<field name="model">etl.server</field>
+			<field name="arch" type="xml">
+			    <form string="ETL Server" version="7.0">
+			    	<sheet>
+			    		<h1>
+	                        <label string="ETL Server "/>
+	                        <field name="name" class="oe_inline"/>
+	                    </h1>
+	                    <group>
+	                        <field name="str_connection" attrs="{'invisible':[('type','=','xmlrpc')],'required':[('type','!=','xmlrpc')]}" class="oe_inline"/>
+	                    </group>
+                        <group>
+                            <group>
+                            	<field name="type" attrs="{'invisible':[('local_server','=',True)]}"/>
+                            	<field name="local_server"/>
+								<field name="active"/>
+			    			</group>
+			    			<group>
+			    				<field name="host" attrs="{'invisible':['|',('type','!=','xmlrpc'),('local_server','=',True)],'required':[('type','=','xmlrpc')]}"/>
+								<field name="port" attrs="{'invisible':['|',('type','!=','xmlrpc')],'required':[('type','=','xmlrpc')]}"/>
+								<field name="database" attrs="{'invisible':['|',('type','!=','xmlrpc'),('local_server','=',True)],'required':[('type','=','xmlrpc'),('local_server','=',False)]}"/>
+								<field name="database_encoding" attrs="{'invisible':[('type','=','xmlrpc')],'required':[('type','!=','xmlrpc')]}"/>
+								<field name="login" attrs="{'invisible':[('type','!=','xmlrpc')],'required':[('type','=','xmlrpc')]}"/>
+								<field name="password" password="1" attrs="{'invisible':[('type','!=','xmlrpc')],'required':[('type','=','xmlrpc')]}"/>
+			    			</group>
+			    		</group>
+			    		<separator string="ETL Jobs" attrs="{'invisible':[('local_server','=',True)]}"/>
+			    		<field name="job_ids" attrs="{'invisible':[('local_server','=',True)]}"/>
+					</sheet>
+			    </form>
+			</field>
+	    </record>
+	    
+		<record model="ir.actions.act_window" id="etl_server_list_action">
+		    <field name="name">ETL Server</field>
+		    <field name="res_model">etl.server</field>
+		    <field name="view_type">form</field>
+		    <field name="view_mode">tree,form</field>
+	    </record>
+	    <menuitem name='ETL Server' id = 'etl_server_menu' parent='etl_menu' sequence='30' action="etl_server_list_action"/>
+	    
+	    <record id="view_etl_mapping_tree" model="ir.ui.view">
+			<field name="name">ETL Mapping List</field>
+			<field name="model">etl.mapping</field>
+			<field name="arch" type="xml">
+			    <tree string="ETL Mapping List">
+					<field name="name"/>
+					<field name="date"/>
+			    </tree>
+			</field>
+	    </record>
+	    <record id="view_etl_mapping_form" model="ir.ui.view">
+			<field name="name">ETL Mapping Form</field>
+			<field name="model">etl.mapping</field>
+			<field name="arch" type="xml">
+			    <form string="ETL Mapping" version="7.0">
+			    	<sheet>
+                        <group>
+                            <group>
+                            	<field name="name"/>
+                            	<field name="return_null"/>
+			    			</group>
+			    			<group>
+			    				<field name="date"/>
+			    				<field name="active"/>
+			    			</group>
+			    		</group>
+						<field name="line_ids">
+							<tree editable="top" string="Mapping Lines">
+								<field name="name"/>
+								<field name="map_char"/>
+								<field name="map_id"/>
+								<field name="map_xml_id"/>
+								<field name="map_ref"/>
+								<field name="is_default"/>
+							</tree>
+							
+						</field>
+					</sheet>
+			    </form>
+			</field>
+	    </record>
+	    
+	    <record model="ir.actions.act_window" id="etl_mapping_list_action">
+		    <field name="name">ETL Mapping</field>
+		    <field name="res_model">etl.mapping</field>
+		    <field name="view_type">form</field>
+		    <field name="view_mode">tree,form</field>
+	    </record>
+	    <menuitem name='ETL Mapping' id = 'etl_mapping_menu' parent='etl_menu' sequence='50' action="etl_mapping_list_action"/>
+	    
+	    <record id="view_etl_mapping_line_tree" model="ir.ui.view">
+			<field name="name">ETL Mapping Lines List</field>
+			<field name="model">etl.mapping.line</field>
+			<field name="arch" type="xml">
+			    <tree editable="top" string="ETL Mapping Lines">
+					<field name="mapping_id"/>
+					<field name="name"/>
+					<field name="map_char"/>
+					<field name="map_id"/>
+					<field name="map_xml_id"/>
+					<field name="map_ref"/>
+					<field name="is_default"/>
+			    </tree>
+			</field>
+	    </record>
+	    
+	    <record model="ir.actions.act_window" id="etl_mapping_line_list_action">
+		    <field name="name">ETL Mapping Line</field>
+		    <field name="res_model">etl.mapping.line</field>
+		    <field name="view_type">form</field>
+		    <field name="view_mode">tree,form</field>
+	    </record>
+	    <menuitem name='ETL Mapping Line' id = 'etl_mapping_line_menu' parent='etl_menu' sequence='60' action="etl_mapping_line_list_action"/>
+	</data>
+</openerp>

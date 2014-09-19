@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+
+    <menuitem name="VAT Declarations"
+        id="menu_account_vat_decl_config"
+        parent="account.menu_finance_configuration"/>
+
+    <menuitem name="VAT Declarations"
+        id="menu_account_vat_decl"
+        parent="account.menu_finance_periodical_processing"/>
+
+    <record id="view_account_vat_decl_template_tree" model="ir.ui.view">
+        <field name="name">account.vat.decl.template.tree</field>
+        <field name="model">account.vat.decl.template</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="VAT Declaration Templates">
+                <field name="name"/>
+                <field name="type"/>
+                <field name="valid_from"/>
+                <field name="valid_to"/>
+                <field name="case_template_ids"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_account_vat_decl_template_form" model="ir.ui.view">
+        <field name="name">account.vat.decl.template.form</field>
+        <field name="model">account.vat.decl.template</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="VAT Declaration Template">
+                <field name="name"/>
+                <field name="type"/>
+                <field name="valid_from"/>
+                <field name="valid_to"/>
+                <field name="company_id"/>
+                <notebook colspan="4">
+                    <page string="Case Templates">
+                        <field name="case_template_ids" colspan="4" nolabel="1">
+                            <tree string="VAT Case Templates">
+                                <field name="sequence"/>
+                                <field name="name"/>
+                                <field name="number"/>
+                                <field name="summary"/>
+                                <field name="line_ids"/>
+                            </tree>
+                            <form string="VAT Case Template">
+                                <field name="number"/>
+                                <field name="name"/>
+                                <field name="sequence"/>
+                                <separator string="Description" colspan="4"/>
+                                <field name="description" colspan="4" nolabel="1"/>
+                                <separator string="Lines" colspan="4"/>
+                                <field name="line_ids" colspan="4" nolabel="1">
+                                    <tree string="Lines" editable="bottom">
+                                        <field name="sign"/>
+                                        <field name="type"/>
+                                        <field name="value"/>
+                                        <field name="journal_code" attrs="{'readonly':[('type','=','account.vat.decl.case.template')]}"/> <!--YT 21/9/2012-->
+                                        <field name="coefficient"/> <!--YT 21/9/2012-->
+                                        <field name="python_coefficient" attrs="{'readonly':[('coefficient','=',False)]}"/> <!--YT 21/9/2012-->
+                                    </tree>
+                                    <form string="Line">
+                                        <field name="sign"/>
+                                        <field name="type"/>
+                                        <field name="value" colspan="4"/>
+                                        <field name="journal_code" attrs="{'readonly':[('type','=','account.vat.decl.case.template')]}"/> <!--YT 21/9/2012-->
+                                        <field name="coefficient"/> <!--YT 21/9/2012-->
+                                        <field name="python_coefficient" colspan="4" attrs="{'invisible':[('coefficient','=',False)]}"/> <!--YT 21/9/2012-->
+                                    </form>
+                                </field>
+                            </form>
+                        </field>
+                    </page>
+                    <page string="Others">
+                        <field name="computed_name" colspan="4"/>
+                        <group colspan="4">
+                            <label string="You can use those params inside Computed Name field:" colspan="4"/>
+                            <label string="From:" colspan="4"/>
+                            <label string="Year: $(from_Y)s, ..."/>
+                            <label string="To:" colspan="4"/>
+                            <label string="Year: $(to_Y)s, ..."/>
+                        </group>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_account_vat_decl_template_search" model="ir.ui.view">
+        <field name="name">account.vat.decl.template.search</field>
+        <field name="model">account.vat.decl.template</field>
+        <field name="type">search</field>
+        <field name="arch" type="xml">
+            <search string="VAT Declaration Templates">
+                <filter name="current" string="Current" domain="['|',('valid_to','&gt;=',current_date),('valid_to','=',False)]"/>
+                <separator orientation="vertical"/>
+                <field name="name"/>
+                <field name="type"/>
+                <field name="valid_from"/>
+                <field name="valid_to"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_account_vat_decl_template" model="ir.actions.act_window">
+        <field name="name">VAT Declaration Templates</field>
+        <field name="res_model">account.vat.decl.template</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_account_vat_decl_template_search"/>
+    </record>
+
+    <menuitem id="menu_account_vat_decl_template_config"
+            parent="menu_account_vat_decl_config"
+            action="action_account_vat_decl_template"/>
+
+    <record id="view_account_vat_decl_case_template_tree" model="ir.ui.view">
+        <field name="name">account.vat.decl.case.template.tree</field>
+        <field name="model">account.vat.decl.case.template</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="VAT Case Templates">
+                <field name="decl_template_id"/>
+                <field name="sequence"/>
+                <field name="name"/>
+                <field name="number"/>
+                <field name="summary"/>
+                <field name="line_ids"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_account_vat_decl_case_template_form" model="ir.ui.view">
+        <field name="name">account.vat.decl.case.template.form</field>
+        <field name="model">account.vat.decl.case.template</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="VAT Case Template">
+                <field name="name"/>
+                <field name="number"/>
+                <field name="decl_template_id"/>
+                <separator string="Description" colspan="4"/>
+                <field name="description" colspan="4" nolabel="1"/>
+                <separator string="Lines" colspan="4"/>
+                <field name="line_ids" colspan="4" nolabel="1">
+                    <tree string="Lines">
+                        <field name="sign"/>
+                        <field name="type"/>
+                        <field name="value"/>
+                    </tree>
+                    <form string="Line">
+                        <group colspan="4" col="6">
+                            <field name="sign"/>
+                            <field name="type"/>
+                            <field name="value"/>
+                        </group>
+                    </form>
+                </field>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_account_vat_decl_case_template_from_inline" model="ir.ui.view">
+        <field name="name">account.vat.decl.case.template.form.inline</field>
+        <field name="model">account.vat.decl.case.template</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="VAT Case Template">
+                <field name="name"/>
+                <field name="number"/>
+                <field name="decl_template_id"/>
+                <separator string="Description" colspan="4"/>
+                <field name="description" colspan="4" nolabel="1"/>
+                <separator string="Lines" colspan="4"/>
+                <field name="line_ids" colspan="4" nolabel="1">
+                    <tree string="Lines">
+                        <field name="sign"/>
+                        <field name="type"/>
+                        <field name="value"/>
+                    </tree>
+                    <form string="Line">
+                        <group colspan="4" col="6">
+                            <field name="sign"/>
+                            <field name="type"/>
+                            <field name="value"/>
+                            <field name="journal_code" attrs="{'readonly':[('type','!=','account.tax.code')]}"/> <!--YT 21/9/2012-->
+                            <field name="coefficient"/> <!--YT 21/9/2012-->
+                            <field name="python_coefficient" attrs="{'invisible':[('coefficient','=',False)]}"/> <!--YT 21/9/2012-->
+                        </group>
+                    </form>
+                </field>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_account_vat_decl_case_template_search" model="ir.ui.view">
+        <field name="name">account.vat.decl.case.template.search</field>
+        <field name="model">account.vat.decl.case.template</field>
+        <field name="type">search</field>
+        <field name="arch" type="xml">
+            <search string="VAT Case Templates">
+                <field name="name"/>
+                <field name="number"/>
+                <field name="decl_template_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_vat_decl_case_template" model="ir.actions.act_window">
+        <field name="name">VAT Case Templates</field>
+        <field name="res_model">account.vat.decl.case.template</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_account_vat_decl_case_template_search"/>
+    </record>
+
+    <menuitem id="menu_account_vat_decl_case_template_config"
+        parent="menu_account_vat_decl_config"
+        action="action_vat_decl_case_template"/>
+
+    <record id="view_account_vat_decl_tree" model="ir.ui.view">
+        <field name="name">account.vat.decl.tree</field>
+        <field name="model">account.vat.decl</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="VAT Declarations">
+                <field name="name"/>
+                <field name="type"/>
+                <field name="from_period_id"/>
+                <field name="to_period_id"/>
+                <field name="case_ids"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_account_vat_decl_form" model="ir.ui.view">
+        <field name="name">account.vat.decl.form</field>
+        <field name="model">account.vat.decl</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="VAT Declaration"  version="7.0">
+            	<header>
+                    <button string="Confirm" confirm="Are you sure you want to confirm this VAT declaration?" type="workflow" name="signal_confirm" states="draft"/>
+                    <button string="Recompute Values" states="draft" type="object" name="recompute_values"/>
+                    <field name="state" widget="statusbar"/>
+            	</header>
+            	<sheet>
+            	<group><group>
+	                <field name="name"/>
+	                <field name="type" on_change="onchange_from_period(from_period_id, type, decl_template_id)"/>
+	                <field name="decl_template_id" domain="[('company_id','=',company_id)]"/>
+                </group><group>
+	                <field name="from_period_id" domain="[('company_id','=',company_id)]" 
+	                	on_change="onchange_from_period(from_period_id, type, decl_template_id)"/>
+	                <field name="to_period_id" domain="[('company_id','=',company_id)]"/>
+	                <field name="company_id"/>
+                </group></group>
+                <notebook colspan="4">
+                    <page string="Cases">
+                        <field name="case_ids" colspan="4" nolabel="1"/>
+                    </page>
+                    <page string="Note">
+                        <separator string="Note" colspan="4"/>
+                        <field name="note" colspan="4" nolabel="1"/>
+                    </page>
+                </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_account_vat_decl_search" model="ir.ui.view">
+        <field name="name">account.vat.decl.search</field>
+        <field name="model">account.vat.decl</field>
+        <field name="type">search</field>
+        <field name="arch" type="xml">
+            <search string="VAT Declarations">
+                <filter name="draft" string="Draft" domain="[('state','=','draft')]"/>
+                <separator orientation="vertical"/>
+                <field name="name"/>
+                <field name="type"/>
+                <field name="from_period_id"/>
+                <field name="to_period_id"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_account_vat_decl" model="ir.actions.act_window">
+        <field name="name">VAT Declarations</field>
+        <field name="res_model">account.vat.decl</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="view_account_vat_decl_search"/>
+    </record>
+
+    <menuitem name="VAT Declarations"
+        id="menu_account_vat_declarations"
+        parent="menu_account_vat_decl"
+        action="action_account_vat_decl"/>
+
+    <record id="view_account_vat_decl_case_tree" model="ir.ui.view">
+        <field name="name">account.vat.decl.case.tree</field>
+        <field name="model">account.vat.decl.case</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="Cases">
+                <field name="sequence" invisible="1"/>
+                <field name="number"/>
+                <field name="name"/>
+                <field name="value"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_account_vat_decl_case_form" model="ir.ui.view">
+        <field name="name">account.vat.decl.case.form</field>
+        <field name="model">account.vat.decl.case</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Case">
+                <field name="number"/>
+                <field name="name"/>
+                <field name="value"/>
+                <separator string="Extra Information" colspan="4"/>
+                <field name="case_template_id"/>
+            </form>
+        </field>
+    </record>
+
+</data>
+</openerp>

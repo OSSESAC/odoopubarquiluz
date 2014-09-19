@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <report id="report_account_invoice_print" name="account.invoice.print" string="Invoice Print" model="account.invoice" 
+            rml="l10n_co_account/report/account_invoice_print.rml" auto="False" header = "False" menu="True"/>
+        <!--report id="report_account_ticket_print" name="account.ticket.print" string="Bill of Sale Print" model="account.invoice"
+            rml="l10n_co_account/report/account_ticket_print.rml" auto="False" header = "False" menu="True"/-->
+        <report id="report_account_credit_print" name="account.credit.print" string="Credit Note Print" model="account.invoice" 
+            rml="l10n_co_account/report/account_credit_print.rml" auto="False" header = "False" menu="True"/>
+        <report id="report_account_debit_print" name="account.debit.print" string="Debit Note Print" model="account.invoice" 
+            rml="l10n_co_account/report/account_debit_print.rml" auto="False" header = "False" menu="True"/>
+        <report id="report_account_voucher_print" name="account.voucher.print" string="Voucher Print" model="account.voucher" 
+            rml="l10n_co_account/report/account_voucher_print.rml" auto="False" header = "False" menu="True"/>
+    </data>
+</openerp>

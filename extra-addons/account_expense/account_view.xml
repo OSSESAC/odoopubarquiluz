@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		
+		<record model='ir.ui.view' id='view_account_transfer_form'>
+			<field name='name'>Account Transfer Form inherit Expense</field>
+			<field name='model'>account.transfer</field>
+			<field name='inherit_id' ref='account_transfer.view_account_transfer_form'/>
+			<field name='arch' type='xml'>
+				<xpath expr="//field[@name='name']" position="before">
+	            	<label string="Expense Transfer " attrs="{'invisible':['|',('name','=','/'),('type','!=','expense')]}"/>
+	            </xpath>
+				<xpath expr="//group[@name='two']" position="inside">
+					<field name="expense_id"/>
+				</xpath>
+			</field>
+		</record>
+		
+		<record model='ir.ui.view' id='journal_form_view_inherit_expense'>
+			<field name='name'>account.journal.form.inherit.expense</field>
+			<field name='model'>account.journal</field>
+			<field name='inherit_id' ref='account.view_account_journal_form'/>
+			<field name='arch' type='xml'>
+                <field name="entry_posted" position="after">
+                    <field name="is_expense" attrs="{'invisible':[('type','not in',['cash','bank'])]}"/>
+                </field>
+			</field>
+		</record>
+		
+		<record model='ir.ui.view' id='view_move_form'>
+			<field name='name'>account.move.form.inherit.expense</field>
+			<field name='model'>account.move</field>
+			<field name='inherit_id' ref='account.view_move_form'/>
+			<field name='arch' type='xml'>
+                <field name="to_check" position="after">
+                    <!--field name="expense_id" readonly="0"/-->
+                </field>
+			</field>
+		</record>
+        
+        <record id="view_voucher_form" model="ir.ui.view">
+            <field name="name">account.voucher.form.inherit.expense</field>
+            <field name="model">account.voucher</field>
+            <field name="inherit_id" ref="account_voucher.view_voucher_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='number'][last()]" position="after">
+                    <field name="expense_id"/>
+                </xpath>
+            </field>
+        </record>
+        
+	</data>
+</openerp>

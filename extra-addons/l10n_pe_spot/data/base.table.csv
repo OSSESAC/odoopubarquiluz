@@ -1,0 +1,5 @@
+id,company_id,country_id,code,name,description,parent_id:id,type
+spot,,Peru,PE.SPOT,SPOT Tablas y Valores,SUNAT Sistema de Pago de Obligaciones Tributarias con el Gobierno Central – SPOT (Sistema de Detracciones),l10n_pe_base.sunat,view
+spot_anexo_04,,Peru,PE.SPOT.ANEXO_04,SPOT Anexo 4,Código Tipo de Bienes y Servicios Sujetos al Sistema,spot,normal
+spot_anexo_05,,Peru,PE.SPOT.ANEXO_05,SPOT Anexo 5,Código Tipo de Operación Sujeta al Sistema,spot,normal
+spot_limites,,Peru,PE.SPOT.LIMITES,SPOT Limites,Límites y Rangos para Operación Sujeta al Sistema,spot,normal

@@ -1,0 +1,7 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+access_account_expense,account.expense,model_account_expense,,1,0,0,0
+access_account_expense_invoice,account.expense.invoice,model_account_expense_invoice,,1,0,0,0
+access_account_expense_user,account.expense user,model_account_expense,group_expense_user,1,1,1,0
+access_account_expense_invoice_user,account.expense.invoice user,model_account_expense_invoice,group_expense_user,1,1,1,0
+access_account_expense_manager,account.expense manager,model_account_expense,group_expense_manager,1,1,1,1
+access_account_expense_invoice_manager,account.expense manager.invoice,model_account_expense_invoice,group_expense_manager,1,1,1,1

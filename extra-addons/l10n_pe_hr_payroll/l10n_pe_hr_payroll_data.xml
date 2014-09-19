@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    <record id="hr_payroll_rules_grati" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.ALW"/> 
+        <field name="name">Gratificación</field>
+        <field name="code">GRATI</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">month = payslip.date_from.split('-')[1]
+result = False
+if month == '07':
+    result = True
+elif month == '12':
+    result = True</field>
+        <field name="amount_select">percentage</field>
+        <field name="amount_percentage_base">BASIC</field>
+        <field name="quantity">1.0</field>
+        <field name="amount_percentage">109.0</field>
+    </record>
+    <record id="hr_payroll_rules_5ta" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.DED"/> 
+        <field name="name">Rent 5th Caregory</field>
+        <field name="code">RETE5ta</field>
+        <field name="sequence">180</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">month = payslip.date_from.split('-')[1]
+uit = element_obj.get_float(cr,uid,'PE.VARS','UIT',payslip.date_from)
+current_wage = GROSS
+result = False
+prior_wage = employee_obj.get_prior_month_code(cr, uid, employee.id, payslip.date_from)
+prior_tax = -employee_obj.get_prior_month_code(cr, uid, employee.id, payslip.date_from, 'RETE5ta')
+if month == '01':
+    annual_wage = current_wage * 12 + contract.wage * 2.18
+    rent_net = annual_wage - (7 * uit)
+    result = element_obj.get_percent(cr,uid,'PE.5ta.RATE','5ta.RATE',payslip.date_from,rent_net/uit) > 0
+elif month == '02':
+    annual_wage = current_wage * 11 + contract.wage * 2.18 + prior_wage
+    rent_net = annual_wage - (7 * uit)
+    result = element_obj.get_percent(cr,uid,'PE.5ta.RATE','5ta.RATE',payslip.date_from,rent_net/uit) > 0
+elif month == '03':
+    annual_wage = current_wage * 10 + contract.wage * 2.18 + prior_wage
+    rent_net = annual_wage - (7 * uit)
+    result = element_obj.get_percent(cr,uid,'PE.5ta.RATE','5ta.RATE',payslip.date_from,rent_net/uit) > 0
+elif month == '04':
+    annual_wage = current_wage * 9 + contract.wage * 2.18 + prior_wage
+    rent_net = annual_wage - (7 * uit)
+    result = (element_obj.get_percent(cr,uid,'PE.5ta.RATE','5ta.RATE',payslip.date_from,rent_net/uit) * rent_net - prior_tax) > 0
+elif month == '05':
+    annual_wage = current_wage * 8 + contract.wage * 2.18 + prior_wage
+    rent_net = annual_wage - (7 * uit)
+    result = (element_obj.get_percent(cr,uid,'PE.5ta.RATE','5ta.RATE',payslip.date_from,rent_net/uit) * rent_net - prior_tax) > 0
+elif month == '06':
+    prior_tax = -employee_obj.get_prior_month_code(cr, uid, employee.id, '%s-05-01'%payslip.date_from[0:4], 'RETE5ta')
+    annual_wage = current_wage * 7 + contract.wage * 2.18 + prior_wage
+    rent_net = annual_wage - (7 * uit)
+    result = (element_obj.get_percent(cr,uid,'PE.5ta.RATE','5ta.RATE',payslip.date_from,rent_net/uit) * rent_net - prior_tax) > 0
+elif month == '07':
+    prior_tax = -employee_obj.get_prior_month_code(cr, uid, employee.id, '%s-05-01'%payslip.date_from[0:4], 'RETE5ta')
+    annual_wage = current_wage * 6 + contract.wage * 1.09 + prior_wage
+    rent_net = annual_wage - (7 * uit)
+    result = (element_obj.get_percent(cr,uid,'PE.5ta.RATE','5ta.RATE',payslip.date_from,rent_net/uit) * rent_net - prior_tax) > 0
+elif month == '08':
+    annual_wage = current_wage * 5 + contract.wage * 1.09 + prior_wage
+    rent_net = annual_wage - (7 * uit)
+    result = (element_obj.get_percent(cr,uid,'PE.5ta.RATE','5ta.RATE',payslip.date_from,rent_net/uit) * rent_net - prior_tax) > 0
+elif month == '09':
+    annual_wage = current_wage * 4 + contract.wage * 1.09 + prior_wage
+    rent_net = annual_wage - (7 * uit)
+    result = (element_obj.get_percent(cr,uid,'PE.5ta.RATE','5ta.RATE',payslip.date_from,rent_net/uit) * rent_net - prior_tax) > 0
+elif month == '10':
+    prior_tax = -employee_obj.get_prior_month_code(cr, uid, employee.id, '%s-09-01'%payslip.date_from[0:4], 'RETE5ta')
+    annual_wage = current_wage * 3 + contract.wage * 1.09 + prior_wage
+    rent_net = annual_wage - (7 * uit)
+    result = (element_obj.get_percent(cr,uid,'PE.5ta.RATE','5ta.RATE',payslip.date_from,rent_net/uit) * rent_net - prior_tax) > 0
+elif month == '11':
+    prior_tax = -employee_obj.get_prior_month_code(cr, uid, employee.id, '%s-09-01'%payslip.date_from[0:4], 'RETE5ta')
+    annual_wage = current_wage * 2 + contract.wage * 1.09 + prior_wage
+    rent_net = annual_wage - (7 * uit)
+    result = (element_obj.get_percent(cr,uid,'PE.5ta.RATE','5ta.RATE',payslip.date_from,rent_net/uit) * rent_net - prior_tax) > 0
+elif month == '12':
+    annual_wage = current_wage + prior_wage
+    rent_net = annual_wage - (7 * uit)
+    result = (element_obj.get_percent(cr,uid,'PE.5ta.RATE','5ta.RATE',payslip.date_from,rent_net/uit) * rent_net - prior_tax) > 0</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">month = payslip.date_from.split('-')[1]
+uit = element_obj.get_float(cr,uid,'PE.VARS','UIT',payslip.date_from)
+result = 0.0
+current_wage = GROSS
+prior_wage = employee_obj.get_prior_month_code(cr, uid, employee.id, payslip.date_from)
+prior_tax = -employee_obj.get_prior_month_code(cr, uid, employee.id, payslip.date_from, 'RETE5ta')
+if month == '01':
+    annual_wage = current_wage * 12 + contract.wage * 2.18
+    rent_net = annual_wage - (7 * uit)
+    tax_amount = element_obj.get_percent(cr,uid,'PE.5ta.RATE','5ta.RATE',payslip.date_from,rent_net/uit) * rent_net
+    result = -1 * tax_amount / 12
+elif month == '02':
+    annual_wage = current_wage * 11 + contract.wage * 2.18 + prior_wage
+    rent_net = annual_wage - (7 * uit)
+    tax_amount = element_obj.get_percent(cr,uid,'PE.5ta.RATE','5ta.RATE',payslip.date_from,rent_net/uit) * rent_net
+    result = -1 * tax_amount / 12
+elif month == '03':
+    annual_wage = current_wage * 10 + contract.wage * 2.18 + prior_wage
+    rent_net = annual_wage - (7 * uit)
+    tax_amount = element_obj.get_percent(cr,uid,'PE.5ta.RATE','5ta.RATE',payslip.date_from,rent_net/uit) * rent_net
+    result = -1 * tax_amount / 12
+elif month == '04':
+    annual_wage = current_wage * 9 + contract.wage * 2.18 + prior_wage
+    rent_net = annual_wage - (7 * uit)
+    tax_amount = element_obj.get_percent(cr,uid,'PE.5ta.RATE','5ta.RATE',payslip.date_from,rent_net/uit) * rent_net - prior_tax
+    result = -1 * tax_amount / 9
+elif month == '05':
+    annual_wage = current_wage * 8 + contract.wage * 2.18 + prior_wage
+    rent_net = annual_wage - (7 * uit)
+    tax_amount = element_obj.get_percent(cr,uid,'PE.5ta.RATE','5ta.RATE',payslip.date_from,rent_net/uit) * rent_net - prior_tax
+    result = -1 * tax_amount / 8
+elif month == '06':
+    prior_tax = -employee_obj.get_prior_month_code(cr, uid, employee.id, '%s-05-01'%payslip.date_from[0:4], 'RETE5ta')
+    annual_wage = current_wage * 7 + contract.wage * 2.18 + prior_wage
+    rent_net = annual_wage - (7 * uit)
+    tax_amount = element_obj.get_percent(cr,uid,'PE.5ta.RATE','5ta.RATE',payslip.date_from,rent_net/uit) * rent_net - prior_tax
+    result = -1 * tax_amount / 8
+elif month == '07':
+    prior_tax = -employee_obj.get_prior_month_code(cr, uid, employee.id, '%s-05-01'%payslip.date_from[0:4], 'RETE5ta')
+    annual_wage = current_wage * 6 + contract.wage * 1.09 + prior_wage
+    rent_net = annual_wage - (7 * uit)
+    tax_amount = element_obj.get_percent(cr,uid,'PE.5ta.RATE','5ta.RATE',payslip.date_from,rent_net/uit) * rent_net - prior_tax
+    result = -1 * tax_amount / 8
+elif month == '08':
+    annual_wage = current_wage * 5 + contract.wage * 1.09 + prior_wage
+    rent_net = annual_wage - (7 * uit)
+    tax_amount = element_obj.get_percent(cr,uid,'PE.5ta.RATE','5ta.RATE',payslip.date_from,rent_net/uit) * rent_net - prior_tax
+    result = -1 * tax_amount / 5
+elif month == '09':
+    annual_wage = current_wage * 4 + contract.wage * 1.09 + prior_wage
+    rent_net = annual_wage - (7 * uit)
+    tax_amount = element_obj.get_percent(cr,uid,'PE.5ta.RATE','5ta.RATE',payslip.date_from,rent_net/uit) * rent_net - prior_tax
+    result = -1 * tax_amount / 4
+elif month == '10':
+    prior_tax = -employee_obj.get_prior_month_code(cr, uid, employee.id, '%s-09-01'%payslip.date_from[0:4], 'RETE5ta')
+    annual_wage = current_wage * 3 + contract.wage * 1.09 + prior_wage
+    rent_net = annual_wage - (7 * uit)
+    tax_amount = element_obj.get_percent(cr,uid,'PE.5ta.RATE','5ta.RATE',payslip.date_from,rent_net/uit) * rent_net - prior_tax
+    result = -1 * tax_amount / 4
+elif month == '11':
+    prior_tax = -employee_obj.get_prior_month_code(cr, uid, employee.id, '%s-05-01'%payslip.date_from[0:4], 'RETE5ta')
+    annual_wage = current_wage * 2 + contract.wage * 1.09 + prior_wage
+    rent_net = annual_wage - (7 * uit)
+    tax_amount = element_obj.get_percent(cr,uid,'PE.5ta.RATE','5ta.RATE',payslip.date_from,rent_net/uit) * rent_net - prior_tax
+    result = -1 * tax_amount / 4
+elif month == '12':
+    annual_wage = current_wage + prior_wage
+    rent_net = annual_wage - (7 * uit)
+    tax_amount = element_obj.get_percent(cr,uid,'PE.5ta.RATE','5ta.RATE',payslip.date_from,rent_net/uit) * rent_net - prior_tax
+    result = -1 * tax_amount</field>
+    </record>
+    <record id="hr_payroll_rules_4ta" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.DED"/> 
+        <field name="name">Retention Rent 4ta</field>
+        <field name="code">RETE4ta</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">suspension = employee.address_home_id.pe_4ta_suspension_id
+result = True
+if suspension:
+    result = suspension.application_result == 'valid' and payslip.date_to >= suspension.application_date and payslip.date_from &lt;= suspension.application_end
+result = contract.wage >= element_obj.get_float(cr,uid,'PE.4ta.SUSPENSION','4ta.MINIMUM.AMOUNT',payslip.date_from) and not result</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = -contract.wage * element_obj.get_percent(cr,uid,'PE.4ta.RATE','4ta.RATE',payslip.date_from)</field>
+    </record>
+    <record id="hr_payroll_rules_essalud" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.COMP"/> 
+        <field name="name">ESSALUD</field>
+        <field name="code">ESSALUD</field>
+        <field name="condition_select">none</field>
+        <field name="amount_select">percentage</field>
+        <field name="amount_percentage_base">BASIC</field>
+        <field name="quantity">1.0</field>
+        <field name="amount_percentage">9.0</field>
+    </record>
+    <record id="hr_payroll_rules_SP" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.DED"/> 
+        <field name="name">Pension Fund</field>
+        <field name="code">SP</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = bool(employee.pension_fund)</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = -contract.wage * (0.10 + ((employee.pension_fund and employee.pension_fund.element_float or 0.0)/100 * (employee.pension_fund and employee.pension_fund.element_percent or 0.0)/100))</field>
+    </record>
+    <record id="hr_payroll_rules_children" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.ALW"/> 
+        <field name="name">Children Allowance</field>
+        <field name="code">CHILDREN</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = bool(employee.children)</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = element_obj.get_float(cr,uid,'PE.VARS','LIVING.WAGE',payslip.date_from)/10</field>
+    </record>
+    
+    <record id="hr_payroll_salary_structure_4ta" model="hr.payroll.structure">
+        <field name="code">4ta</field>
+        <field name="name">Professional Services</field>
+        <field eval="[(6, 0, [ref('hr_payroll_rules_4ta')])]" name="rule_ids"/>
+        <field name="company_id" ref="base.main_company"/>    
+        <field name="parent_id" ref="hr_payroll.structure_base"/>
+    </record>	
+    	
+    <record id="hr_payroll_salary_structure_5ta" model="hr.payroll.structure">
+        <field name="code">5ta</field>
+        <field name="name">Employees</field>
+        <field eval="[(6, 0, [ref('hr_payroll_rules_children'),ref('hr_payroll_rules_SP'),ref('hr_payroll_rules_essalud'),ref('hr_payroll_rules_5ta'),ref('hr_payroll_rules_grati')])]" name="rule_ids"/>
+        <field name="company_id" ref="base.main_company"/>    
+        <field name="parent_id" ref="hr_payroll.structure_base"/>
+    </record>
+
+    </data>
+</openerp>

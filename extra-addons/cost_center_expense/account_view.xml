@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		<record model='ir.ui.view' id='account_invoice_cc_form_view'>
+			<field name='name'>account.expense.invoice.supplier.form.inherit.cost.center</field>
+			<field name='model'>account.expense.invoice</field>
+			<field name='inherit_id' ref='account_expense.expense_invoice_supplier_form'/>
+			<field name='arch' type='xml'>
+                <field name="analytic_id" position="replace">
+                    <field name="analytic_id" groups="analytic.group_analytic_accounting" domain="[('type','!=','view'), ('company_id', '=', company_id), ('parent_id', '!=', False)]" on_change="onchange_analytic_id(analytic_id)"/>
+                    <field name="account_cc_id"/>
+                </field>
+                <field name="account_analytic_id" position="replace">
+                    <field name="account_analytic_id" groups="analytic.group_analytic_accounting" domain="[('type','!=','view'), ('company_id', '=', parent.company_id), ('parent_id', '!=', False)]" on_change="onchange_analytic_id(account_analytic_id)"/>
+                    <field name="account_cc_id"/>
+                </field>
+			</field>
+		</record>
+		
+		<record model='ir.ui.view' id='view_account_expense_expense_form'>
+			<field name='name'>account.expense.form.inherit.cost.center</field>
+			<field name='model'>account.expense</field>
+			<field name='inherit_id' ref='account_expense.view_account_expense_expense_form'/>
+			<field name='arch' type='xml'>
+                <field name="analytic_id" position="replace">
+                    <field name="analytic_id" groups="analytic.group_analytic_accounting" domain="[('type','!=','view'), ('company_id', '=', parent.company_id), ('parent_id', '!=', False)]" on_change="onchange_analytic_id(analytic_id)"/>
+                    <field name="account_cc_id"/>
+                </field>
+			</field>
+		</record>
+	</data>
+</openerp>

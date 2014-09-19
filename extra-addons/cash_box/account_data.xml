@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+		<record forcecreate="True" id="property_bank_journal_id" model="ir.property">
+            <field name="name">property_bank_journal_id</field>
+            <field name="fields_id" search="[('model','=','account.journal'),('name','=','property_bank_journal_id')]"/>
+            <field search="[('type','=','bank')]" model="account.journal" name="value"/>
+            <field name="company_id" ref="base.main_company"/>
+        </record>
+    </data>
+</openerp>

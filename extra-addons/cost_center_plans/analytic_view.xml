@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		
+		<record model='ir.ui.view' id='view_account_analytic_journal_form'>
+			<field name='name'>account.analytic.journal.form.inherit.cost.center.plans</field>
+			<field name='model'>account.analytic.journal</field>
+			<field name='inherit_id' ref='account.view_account_analytic_journal_form'/>
+			<field name='arch' type='xml'>
+                <field name="type" position="after">
+                    <field name="journal_id" attrs="{'invisible':[('type','not in',['purchase','general'])],'required':[('type','in',['purchase','general'])]}"
+                    	domain="[('type','in',['purchase','purchase_refund','general']),('company_id','=',company_id)]"/>
+                    <field name="charge_account_id" attrs="{'invisible':[('type','not in',['purchase','general'])]}"/>
+                </field>
+			</field>
+		</record>
+		
+		<record model='ir.ui.view' id='account_analytic_plan_instance_form'>
+			<field name='name'>account.analytic.plan.instance.form.inherit.cost.center.plans</field>
+			<field name='model'>account.analytic.plan.instance</field>
+			<field name='inherit_id' ref='account_analytic_plans.account_analytic_plan_instance_form'/>
+			<field name='arch' type='xml'>
+                <field name="journal_id" position="replace">
+                	<field name="journal_id" domain="[('company_id','=',company_id)]"/>
+                    <field name="charge_account_id"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </field>
+                <field name="analytic_account_id" position="replace">
+					<field name="analytic_account_id" domain="[('company_id','=',parent.company_id)]" 
+						groups="analytic.group_analytic_accounting"/>
+                    <field name="account_cost_center"/>
+                </field>
+			</field>
+		</record>
+		
+		<record model='ir.ui.view' id='view_account_analytic_line_form'>
+			<field name='name'>account.analytic.line.form.inherit.cost.center.plans</field>
+			<field name='model'>account.analytic.line</field>
+			<field name='inherit_id' ref='account.view_account_analytic_line_form'/>
+			<field name='arch' type='xml'>
+				<xpath expr="//group[last()]" position="after">
+                    <group string="Account Move Line" cols="4">
+                    	<field name="account_move_line_ids" nolabel="1"/>
+                    </group>
+                </xpath>
+			</field>
+		</record>
+		
+		<record model="ir.actions.act_window" id="action_analytic_distribution">
+	        <field name="name">Analytic Distribution </field>
+	        <field name="res_model">account.analytic.plan.instance</field>
+	        <field name="view_type">form</field>
+	        <field name="view_mode">tree,form</field>
+	    </record>
+	    <menuitem
+	        id="menu_approve_purchase_requisition_pro_mgt"
+	        sequence="20"
+	        name="Analytc Distribution"
+	        parent="account_analytic_plans.menu_account_analytic_multi_plan_action"
+	        action="action_analytic_distribution"/>
+		
+	</data>
+</openerp>

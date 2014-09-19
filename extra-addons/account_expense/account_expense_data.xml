@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <!--
+        Account Expense Sequences
+        -->
+        <record id="sequence_expense_expense" model="ir.sequence.type">
+            <field name="name">Account Expense</field>
+            <field name="code">account.expense.expense</field>
+        </record>
+        <record id="sequence_expense_expense_seq" model="ir.sequence">
+            <field name="name">Account expense sequence</field>
+            <field name="code">account.expense.expense</field>
+            <field name="prefix">AEXP-</field>
+            <field eval="1" name="number_increment"/>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+		
+		<record id="sequence_expense_paybill" model="ir.sequence.type">
+            <field name="name">Account Expense Paybill</field>
+            <field name="code">account.expense.paybill</field>
+        </record>
+        <record id="sequence_expense_paybill_seq" model="ir.sequence">
+            <field name="name">Account expense paybill sequence</field>
+            <field name="code">account.expense.paybill</field>
+            <field name="prefix">APBL-</field>
+            <field eval="1" name="number_increment"/>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        
+        <record id="sequence_expense_expenditure" model="ir.sequence.type">
+            <field name="name">Account Expense expenditure</field>
+            <field name="code">account.expense.expenditure</field>
+        </record>
+        <record id="sequence_expense_expenditure_seq" model="ir.sequence">
+            <field name="name">Account expense expenditure sequence</field>
+            <field name="code">account.expense.expenditure</field>
+            <field name="prefix">AEPD-</field>
+            <field eval="1" name="number_increment"/>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+        
+        <!-- Account-expense subtypes for messaging / Chatter -->
+        <record id="mt_expense_done" model="mail.message.subtype">
+            <field name="name">Done</field>
+            <field name="res_model">account.expense</field>
+            <field name="default" eval="False"/>
+            <field name="description">Account Expense Done</field>
+        </record>
+    </data>
+</openerp>

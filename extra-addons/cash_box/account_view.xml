@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		
+		<record model='ir.ui.view' id='view_account_journal_form'>
+			<field name='name'>account.journal.form.inherit.cash.box</field>
+			<field name='model'>account.journal</field>
+			<field name='inherit_id' ref='account.view_account_journal_form'/>
+			<field name='arch' type='xml'>
+                <field name="entry_posted" position="after">
+                    <field name="is_cash_box" attrs="{'invisible':[('type','not in',['cash'])]}"/>
+                </field>                
+			</field>
+		</record>
+        
+        <record model='ir.ui.view' id='view_account_transfer_form'>
+			<field name='name'>Account Transfer Form inherit Cash Box</field>
+			<field name='model'>account.transfer</field>
+			<field name='inherit_id' ref='account_transfer.view_account_transfer_form'/>
+			<field name='arch' type='xml'>
+				<xpath expr="//field[@name='name']" position="before">
+	            	<label string="Cash Box Transfer " attrs="{'invisible':['|',('name','=','/'),('type','!=','cash-box')]}"/>
+	            </xpath>
+				<xpath expr="//group[@name='two']" position="inside">
+					<field name="cash_box_id"/>
+				</xpath>
+			</field>
+		</record>
+        
+        <record id="journal_tree" model="ir.ui.view">
+            <field name="name">cash.box..journal.tree</field>
+            <field name="model">account.journal</field>
+            <field name="priority">90</field>
+            <field name="arch" type="xml">
+                <tree colors="blue:last_balance > amount_max;red:last_balance &lt; amount_min" string="Cash Box">
+                	<field name="name"/>
+                    <field name="user_id" groups="base.group_user"/>
+                    <field name="amount_min"/>
+                    <field name="amount_max"/>
+                    <field name="last_balance"/>
+                    <field name="last_balance_date"/>
+                    <field name="currency" groups="base.group_multi_currency"/>
+                    <field name="company_id" groups="base.group_multi_company" widget="selection"/>
+                </tree>
+            </field>
+        </record>
+        <record id="journal_form" model="ir.ui.view">
+            <field name="name">cash.box..journal.form</field>
+            <field name="model">account.journal</field>
+            <field name="priority">90</field>
+            <field name="arch" type="xml">
+            	<form string="Cash Box" version="7.0">
+        		<header>
+        			<button name="action_replenish" type="object" string="Cash Box Replenish"
+        				confirm="Are you sure to make a new transfer to replenish this cash box to a maximum amount?"/>
+        		</header>
+        		<sheet string="Cash Box">
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group col="6">
+                        <group>
+                            <field name="amount_min" widget="monetary" options="{'currency_field': 'currency'}"/>
+                    		<field name="amount_max" widget="monetary" options="{'currency_field': 'currency'}"/>
+                        </group>
+                        <group>
+                            <field name="last_balance" widget="monetary" options="{'currency_field': 'currency'}"/>
+                    		<field name="last_balance_date"/>
+                        </group>
+                        <group>
+                            <field name="pending_transfer" widget="monetary" options="{'currency_field': 'currency'}"/>
+                    		<field name="last_transfer_date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Cash Statements">
+                        	<field name="statement_ids">
+                                <tree colors="red:balance_end_real!=balance_end and state=='draft';blue:state=='draft' and (balance_end_real==balance_end);black:state=='confirm'" string="Cash Statement">
+				                    <field name="name"/>
+				                    <field name="date"/>
+				                    <field name="journal_id"/>
+				                    <field name="balance_start"/>
+				                    <field name="balance_end_real"/>
+				                    <field name="balance_end" invisible="1"/>
+				                    <field name="total_entry_encoding"/>
+				                    <field name="state"/>
+				                    <field name="previus_id"/>
+				                    <field name="next_id"/>
+				                </tree>
+                            </field>
+                        </page>
+                        <page string="Cash Box Transfers">
+                        	<field name="transfer_ids">
+                        	</field>
+                        </page>
+                        <page string="Advanced Settings">
+                            <group>
+                                <group>
+                                    <field name="code"/>
+                            		<field name="type"/>
+                            		<field name="default_debit_account_id" attrs="{'required':[('type','in', ('cash', 'bank'))]}" domain="[('type','&lt;&gt;','view'),('type','&lt;&gt;','consolidation'),('company_id','=',company_id)]"/>
+                            		<field name="default_credit_account_id" attrs="{'required':[('type','in',('cash', 'bank'))]}" domain="[('type','&lt;&gt;','view'),('type','&lt;&gt;','consolidation'),('company_id','=',company_id)]"/>
+                                    <field name="account_transit" attrs="{'required':[('type','in',['cash','bank'])],'invisible':[('type','not in',['cash','bank'])]}"/>
+                                    <field name="user_id" groups="base.group_user"/>
+                                    <field name="sequence_id" required="0" domain="[('company_id','=',company_id)]"/>
+                                    <field name="currency" groups="base.group_multi_currency"/>
+                    				<field name="company_id" groups="base.group_multi_company" widget="selection"/>
+                                </group>
+                                <group>
+                                    <field name="centralisation"/>
+                                    <field name="entry_posted"/>
+                                    <field name="allow_date"/>
+                                    <field name="group_invoice_lines"/>
+                                    <field name="is_cash_box"/>
+                                    <field name="have_partner" attrs="{'invisible':[('type','not in',['cash','bank'])]}"/>
+                                    <field name="property_bank_journal_id" domain="[('type','in',['cash','bank']),('company_id','=',company_id)]"/>
+                                </group>
+                            </group>
+                            <separator colspan="4" string="Accounts Type Allowed (empty for no control)"/>
+                            <field colspan="4" name="type_control_ids" nolabel="1"/>
+                            <separator colspan="4" string="Accounts Allowed (empty for no control)"/>
+                            <field colspan="4" name="account_control_ids" nolabel="1" domain="[('company_id','=',company_id)]"/>
+                        </page>
+                        <page string="Cash Registers">
+                            <group>
+                                <group string="Accounts">
+                                    <field name="profit_account_id" domain="[('type','!=','view'),('company_id','=',company_id)]"/>
+                                    <field name="loss_account_id" domain="[('type','!=','view'),('company_id','=',company_id)]"/>
+                                    <field name="internal_account_id" domain="[('type','!=','view'),('company_id','=',company_id)]"/>
+                                </group>
+                                <group string="Miscellaneous">
+                                    <field name="with_last_closing_balance"/>
+                                    <field name="cash_control" attrs="{'invisible':[('type','not in', ('cash',))]}"/>
+                                </group>
+                            </group>
+                            <separator string="Available Coins" colspan="4" attrs="{'invisible' : ['|',('cash_control', '=', False),('type','not in', ('cash',))] }"/>
+                            <field name="cashbox_line_ids" nolabel="1" string="Unit Of Currency Definition" colspan="4" attrs="{'invisible' : ['|',('cash_control', '=', False),('type','not in', ('cash',))]}">
+                                <tree string="CashBox Lines" editable="bottom">
+                                    <field name="pieces" />
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                  </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="journal_search" model="ir.ui.view">
+            <field name="name">account.journal.search.inherit.cash.box</field>
+            <field name="model">account.journal</field>
+            <field name="arch" type="xml">
+                <search string="Search Cash Box">
+                    <filter domain="[('last_balance', '>', amount_max)]" string="Amount Over" icon="terp-dolar"/>
+                    <field name="user_id"/>
+                    <group expand="0" string="Group By...">
+                        <filter string="User" context="{'group_by':'user_id'}" icon="terp-personal"/>
+                        <filter string="Type" context="{'group_by':'type'}" icon="terp-stock_symbol-selection"/>
+                        <filter string="Currency" context="{'group_by':'currency'}" icon="terp-dolar"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        
+        <record id="cash_box_list_action" model="ir.actions.act_window">
+            <field name="name">Cash Box</field>
+            <field name="res_model">account.journal</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+            <field eval="False" name="view_id"/>
+            <field name="domain">[('is_cash_box','=',True)]</field>
+            <field name="context">{'default_type':'cash', 'default_is_cash_box':True}</field>
+            <field name="search_view_id" ref="journal_search"/>
+        </record>
+        <record id="cash_box_list_action_view1" model="ir.actions.act_window.view">
+            <field eval="10" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="journal_tree"/>
+            <field name="act_window_id" ref="cash_box_list_action"/>
+        </record>
+        <record id="cash_box_list_action_view2" model="ir.actions.act_window.view">
+            <field eval="20" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="journal_form"/>
+            <field name="act_window_id" ref="cash_box_list_action"/>
+        </record>
+		<menuitem name='Cash Box' id='cash_box_menu' parent='account.menu_finance_bank_and_cash' sequence='30' action="cash_box_list_action"/>
+        
+	</data>
+</openerp>

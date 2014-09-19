@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		
+		<record model='ir.ui.view' id='view_account_transfer_form_inherit_advance'>
+			<field name='name'>account.transfer.form.inherit.advance</field>
+			<field name='model'>account.transfer</field>
+			<field name='inherit_id' ref='account_transfer.view_account_transfer_form'/>
+			<field name='arch' type='xml'>
+				<xpath expr="//field[@name='name']" position="before">
+	            	<label string="Supplier Advance Transfer " attrs="{'invisible':['|',('name','=','/'),('type','!=','advance_supplier')]}"/>
+	            	<label string="Customer Advance Transfer " attrs="{'invisible':['|',('name','=','/'),('type','!=','advance_customer')]}"/>
+	            </xpath>
+	            <xpath expr="//group[@name='one']" position="inside">
+	            	<field name="sale_id"/>
+	            </xpath>
+	            <xpath expr="//group[@name='two']" position="inside">
+	            	<field name="purchase_id"/>
+	            </xpath>
+			</field>
+		</record>
+		
+		<record model='ir.ui.view' id='view_account_journal_form'>
+			<field name='name'>account.journal.form.inherit.advance</field>
+			<field name='model'>account.journal</field>
+			<field name='inherit_id' ref='account.view_account_journal_form'/>
+			<field name='arch' type='xml'>
+                <field name="entry_posted" position="after">
+                    <field name="is_cash_advance" attrs="{'invisible':[('type','not in',['cash','bank'])]}"/>
+                </field>
+			</field>
+		</record>
+	</data>
+</openerp>

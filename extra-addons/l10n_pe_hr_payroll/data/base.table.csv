@@ -1,0 +1,5 @@
+id,company_id,country_id,code,name,description,parent_id:id,type
+pe_payroll,,Peru,PE.PAYROLL,Payroll Tables and Values,,l10n_pe_base.pe,view
+pe_payroll_sp,,Peru,PE.PAYROLL.SP,Pension Fund,Pension Fund coverage AFP and ONP,pe_payroll,normal
+pe_5ta,,Peru,PE.5ta,Rent 5th Category Tables and Values,,l10n_pe_base.sunat,view
+pe_5ta_rate,,Peru,PE.5ta.RATE,Rate Rent 5th,Rate Rent 5th Category,pe_5ta,normal

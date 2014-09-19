@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record id="account_einvoice_wkf" model="workflow">
+            <field name="name">Electronic Invoice Basic Workflow</field>
+            <field name="osv">account.einvoice</field>
+            <field name="on_create">True</field>
+        </record>
+        
+        <record id="act_draft" model="workflow.activity">
+            <field name="wkf_id" ref="account_einvoice_wkf"/>
+            <field name="flow_start">True</field>
+            <field name="name">draft</field>
+            <field name="kind">function</field>
+            <field name="action">action_draft()
+write({'state':'draft'})</field>
+        </record>
+        <record id="act_validated" model="workflow.activity">
+            <field name="wkf_id" ref="account_einvoice_wkf"/>
+            <field name="name">validated</field>
+            <field name="kind">function</field>
+            <field name="action">action_validated()
+write({'state':'validated'})</field>
+        </record>
+        <record id="act_send" model="workflow.activity">
+            <field name="wkf_id" ref="account_einvoice_wkf"/>
+            <field name="name">send</field>
+            <field name="kind">function</field>
+            <field name="action">action_send()
+write({'state':'send'})</field>
+        </record>
+        <record id="act_warning" model="workflow.activity">
+            <field name="wkf_id" ref="account_einvoice_wkf"/>
+            <field name="name">warning</field>
+            <field name="kind">function</field>
+            <field name="action">action_warning()
+write({'state':'warning'})</field>
+        </record>
+        <record id="act_error" model="workflow.activity">
+            <field name="wkf_id" ref="account_einvoice_wkf"/>
+            <field name="name">error</field>
+            <field name="kind">function</field>
+            <field name="action">action_error()
+write({'state':'error'})</field>
+        </record>
+        <record id="act_done" model="workflow.activity">
+            <field name="wkf_id" ref="account_einvoice_wkf"/>
+            <field name="name">done</field>
+            <field name="action">action_done()
+write({'state':'done'})</field>
+            <field name="kind">function</field>
+            <field name="join_mode">AND</field>
+        </record>
+        <record id="act_cancel" model="workflow.activity">
+            <field name="wkf_id" ref="account_einvoice_wkf"/>
+            <field name="name">cancel</field>
+            <field name="kind">function</field>
+            <field name="action">action_cancel()
+write({'state':'cancel'})</field>
+        </record>
+        
+        <record id="trans_draft_cancel" model="workflow.transition">
+            <field name="act_from" ref="act_draft"/>
+            <field name="act_to" ref="act_cancel"/>
+            <field name="signal">einvoice_cancel</field>
+        </record>
+        
+        <record id="trans_draft_validated" model="workflow.transition">
+            <field name="act_from" ref="act_draft"/>
+            <field name="act_to" ref="act_validated"/>
+            <field name="signal">einvoice_validated</field>
+        </record>
+        
+        <record id="trans_validated_send" model="workflow.transition">
+            <field name="act_from" ref="act_validated"/>
+            <field name="act_to" ref="act_send"/>
+            <field name="signal">einvoice_send</field>
+            <field name="group_id" ref="group_einvoice_manager"/>
+        </record>
+        <record id="trans_validated_warning" model="workflow.transition">
+            <field name="act_from" ref="act_validated"/>
+            <field name="act_to" ref="act_warning"/>
+            <field name="signal">einvoice_warning</field>
+            <field name="group_id" ref="group_einvoice_manager"/>
+        </record>
+        <record id="trans_validated_error" model="workflow.transition">
+            <field name="act_from" ref="act_validated"/>
+            <field name="act_to" ref="act_error"/>
+            <field name="signal">einvoice_error</field>
+            <field name="group_id" ref="group_einvoice_manager"/>
+        </record>
+        <record id="trans_validated_done" model="workflow.transition">
+            <field name="act_from" ref="act_validated"/>
+            <field name="act_to" ref="act_done"/>
+            <field name="signal">einvoice_done</field>
+            <field name="group_id" ref="group_einvoice_manager"/>
+        </record>
+        <record id="trans_validated_cancel" model="workflow.transition">
+            <field name="act_from" ref="act_validated"/>
+            <field name="act_to" ref="act_cancel"/>
+            <field name="signal">einvoice_cancel</field>
+        </record>
+
+		<record id="trans_send_warning" model="workflow.transition">
+            <field name="act_from" ref="act_send"/>
+            <field name="act_to" ref="act_warning"/>
+            <field name="signal">einvoice_warning</field>
+            <field name="group_id" ref="group_einvoice_manager"/>
+        </record>
+        <record id="trans_send_error" model="workflow.transition">
+            <field name="act_from" ref="act_send"/>
+            <field name="act_to" ref="act_error"/>
+            <field name="signal">einvoice_error</field>
+            <field name="group_id" ref="group_einvoice_manager"/>
+        </record>
+        <record id="trans_send_done" model="workflow.transition">
+            <field name="act_from" ref="act_send"/>
+            <field name="act_to" ref="act_done"/>
+            <field name="signal">einvoice_done</field>
+            <field name="group_id" ref="group_einvoice_manager"/>
+        </record>
+        
+        <record id="trans_warning_done" model="workflow.transition">
+            <field name="act_from" ref="act_warning"/>
+            <field name="act_to" ref="act_done"/>
+            <field name="signal">einvoice_done</field>
+            <field name="group_id" ref="group_einvoice_manager"/>
+        </record>
+        
+        <record id="trans_done_cancel" model="workflow.transition">
+            <field name="act_from" ref="act_done"/>
+            <field name="act_to" ref="act_cancel"/>
+            <field name="signal">einvoice_cancel</field>
+        </record>
+        
+        <record id="trans_error_cancel" model="workflow.transition">
+            <field name="act_from" ref="act_error"/>
+            <field name="act_to" ref="act_cancel"/>
+            <field name="signal">einvoice_cancel</field>
+        </record>
+        
+        <record id="trans_cancel_draft" model="workflow.transition">
+            <field name="act_from" ref="act_cancel"/>
+            <field name="act_to" ref="act_draft"/>
+            <field name="signal">einvoice_draft</field>
+        </record>
+
+    </data>
+</openerp>

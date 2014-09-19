@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record model="res.currency.rate.type" id="rate_type_sunat_bid">
+            <field name="name">sunat.bid</field>
+        </record>
+        <record model="res.currency.rate.type" id="rate_type_sunat_ask">
+            <field name="name">sunat.ask</field>
+        </record>
+    </data>
+</openerp>

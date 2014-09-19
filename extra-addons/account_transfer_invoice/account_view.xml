@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+		
+		<record model='ir.ui.view' id='invoice_form_inherit_transfer'>
+			<field name='name'>account.invoice.form.inherit.transfer</field>
+			<field name='model'>account.invoice</field>
+			<field name='inherit_id' ref='account.invoice_form'/>
+			<field name='arch' type='xml'>
+	            <xpath expr="//field[@name='payment_ids']" position="after">
+	            	<field name="transfer_ids"/>
+	            </xpath>
+			</field>
+		</record>
+		
+		<record model='ir.ui.view' id='invoice_supplier_form_inherit_transfer'>
+			<field name='name'>account.invoice.supplier.form.inherit.transfer</field>
+			<field name='model'>account.invoice</field>
+			<field name='inherit_id' ref='account.invoice_supplier_form'/>
+			<field name='arch' type='xml'>
+	            <xpath expr="//field[@name='payment_ids']" position="after">
+	            	<field name="transfer_ids"/>
+	            </xpath>
+			</field>
+		</record>
+		
+		<record model='ir.ui.view' id='view_account_transfer_form_inherit_invoice'>
+			<field name='name'>account.transfer.form.inherit.invoice</field>
+			<field name='model'>account.transfer</field>
+			<field name='inherit_id' ref='account_transfer.view_account_transfer_form'/>
+			<field name='arch' type='xml'>
+	            <xpath expr="//group[@name='one']" position="inside">
+	            	<field name="invoice_id"/>
+	            </xpath>
+			</field>
+		</record>
+		
+	</data>
+</openerp>

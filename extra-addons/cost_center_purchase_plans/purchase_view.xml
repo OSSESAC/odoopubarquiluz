@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+   <data>
+   	
+        <record model='ir.ui.view' id='purchase_order_form'>
+			<field name='name'>purchase.order.form.inherit.cost.center.purchase.plans</field>
+			<field name='model'>purchase.order</field>
+			<field name='inherit_id' ref='purchase.purchase_order_form'/>
+			<field name='arch' type='xml'>
+                <field name="account_analytic_id" position="after">
+                    <field name="analytics_id"/>
+                </field>
+            </field>
+        </record>
+
+	</data>
+</openerp>

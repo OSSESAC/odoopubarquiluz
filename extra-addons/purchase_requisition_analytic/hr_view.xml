@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="view_department_form">
+            <field name="name">hr.department.form.inherit.requisition.approve</field>
+            <field name="model">hr.department</field>
+            <field name="inherit_id" ref="hr.view_department_form"/>
+            <field name="arch" type="xml">
+            	<xpath expr="//sheet" position="inside">
+            		<label for="analytic_account_ids" string="Analytic Accounts"/>
+                    <field name="analytic_account_ids"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</openerp>

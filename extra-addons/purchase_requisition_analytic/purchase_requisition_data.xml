@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="mt_rfq_in_progress" model="mail.message.subtype">
+            <field name="name">Purchase Requisition Valuated</field>
+            <field name="res_model">purchase.requisition</field>
+        </record>
+        <record id="mt_rfq_approved" model="mail.message.subtype">
+            <field name="name">Purchase Requisition Approved</field>
+            <field name="res_model">purchase.requisition</field>
+        </record>
+
+    </data>
+</openerp>

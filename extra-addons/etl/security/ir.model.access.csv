@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_etl_server,etl.server,model_etl_server,,0,0,0,0
+access_etl_log,etl.server.log,model_etl_log,,1,0,0,0
+access_etl_job,etl.job,model_etl_job,,1,0,0,0
+access_etl_mapping,etl.mapping,model_etl_mapping,,1,0,0,0
+access_etl_mapping_line,etl.mapping.line,model_etl_mapping_line,,1,0,0,0
+access_etl_mapping_job,etl.mapping.job,model_etl_mapping_job,,1,0,0,0
+access_etl_server_system,etl.server.system,model_etl_server,base.group_system,1,1,1,1
+access_etl_log_system,etl.server.log.system,model_etl_log,base.group_system,1,1,1,1
+access_etl_job_system,etl.job.system,model_etl_job,base.group_system,1,1,1,1
+access_etl_mapping_system,etl.mapping.system,model_etl_mapping,base.group_system,1,1,1,1
+access_etl_mapping_line_system,etl.mapping.line.system,model_etl_mapping_line,base.group_system,1,1,1,1
+access_etl_mapping_job_system,etl.mapping.job.system,model_etl_mapping_job,base.group_system,1,1,1,1

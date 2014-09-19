@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--model: workflow, id: 2-->
+        <record model="workflow" id="workflow_account_vat_decl_2">
+            <field name="on_create" eval="1"/>
+            <field name="name">account.vat.decl</field>
+            <field name="osv">account.vat.decl</field>
+        </record>
+
+        <!--model: workflow.activity, id: 8-->
+        <record model="workflow.activity" id="workflow_activity_confirmed_8">
+            <field name="kind">function</field>
+            <field name="name">confirmed</field>
+            <field name="join_mode">XOR</field>
+            <field name="flow_stop" eval="1"/>
+            <field name="split_mode">XOR</field>
+            <field name="action">action_confirm()</field>
+            <field name="wkf_id" ref="workflow_account_vat_decl_2"/>
+        </record>
+
+        <!--model: workflow.activity, id: 7-->
+        <record model="workflow.activity" id="workflow_activity_draft_7">
+            <field name="kind">function</field>
+            <field name="name">draft</field>
+            <field name="join_mode">XOR</field>
+            <field name="split_mode">XOR</field>
+            <field name="action">action_draft()</field>
+            <field name="flow_start" eval="1"/>
+            <field name="wkf_id" ref="workflow_account_vat_decl_2"/>
+        </record>
+
+        <!--model: workflow.transition, id: 12-->
+        <record model="workflow.transition" id="workflow_transition_signal_confirm_12">
+            <field name="signal">signal_confirm</field>
+            <field name="condition">True</field>
+            <field name="act_from" ref="workflow_activity_draft_7"/>
+            <field name="wkf_id" ref="workflow_account_vat_decl_2"/>
+            <field name="act_to" ref="workflow_activity_confirmed_8"/>
+        </record>
+    </data>
+</openerp>

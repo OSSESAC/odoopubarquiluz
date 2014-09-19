@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="purchase_advance_transfer_view" model="ir.ui.view">
+             <field name="name">Purchase Advance Transfer</field>
+             <field name="model">purchase.advance.transfer</field>
+             <field name="arch" type="xml">
+                <form string="Purchase Advance Transfert:" version="7.0">
+                    <group>
+                    	<field name="journal_id" domain="[('type','in',['bank','cash']),('is_cash_advance','=',True)]"/>
+                        <field name="amount"/>
+                    </group>
+                    <footer>
+                        <button name="do_advance_transfer" string="Advance Transfer" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+             </field>
+        </record>
+
+        <record id="action_purchase_advance_transfer" model="ir.actions.act_window">
+             <field name="name">Purchase Advance Transfer</field>
+             <field name="res_model">purchase.advance.transfer</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">tree,form</field>
+             <field name="view_id" ref="purchase_advance_transfer_view"/>
+             <field name="context">{'record_id':active_id}</field>
+             <field name="target">new</field>
+       </record>
+       
+    </data>
+</openerp>

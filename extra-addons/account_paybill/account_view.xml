@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+        
+        <record id="view_bank_statement_form2" model="ir.ui.view">
+            <field name="name">account.bank.statement.form.inherit.expense</field>
+            <field name="model">account.bank.statement</field>
+            <field name="inherit_id" ref="account.view_bank_statement_form2"/>
+            <field name="arch" type="xml">
+	            <xpath expr="//button[@name='button_cancel']" position="after">
+	                <button name="%(action_cash_statement_populate)d" 
+	                	attrs="{'invisible':[('state','!=','open')]}" 
+	                	context="{'company_id':company_id}"
+	                	string="Pay Bill Advance" type="action" icon="gtk-execute"/>
+	                <button name="%(action_cash_statement_populate_back)d" 
+	                	attrs="{'invisible':[('state','!=','open')]}" 
+	                	context="{'company_id':company_id}"
+	                	string="Pay Bill Cash Back" type="action" icon="gtk-execute"/>
+	            </xpath>
+	            <field name="amount" position="after">
+	            	<field name="expense_id" string="Expense" widget="many2onebutton"
+	            		options="{'label':{'create':'Expense','edit':'Edit Expense'}}"
+	            		attrs="{'invisible':[('voucher_id','!=',False)]}"/>
+	            </field>
+            </field>
+        </record>
+        
+        <record id="view_cash_statement_form_voucher" model="ir.ui.view">
+            <field name="name">account.cash.statement.voucher.form.inherit.paybill</field>
+            <field name="model">account.bank.statement</field>
+            <field name="inherit_id" ref="account_voucher.view_cash_statement_form_voucher"/>
+            <field name="arch" type="xml">
+                <field name="voucher_id" position="replace">
+                    <field name="voucher_id" widget="many2onebutton"
+                    	options="{'label':{'create':'Reconcile','edit':'Edit Reconciliation'}}"
+                    	context="{'line_type': type, 'default_type': amount &lt; 0 and 'payment' or 'receipt', 'type': amount &lt; 0 and 'payment' or 'receipt', 'default_partner_id': partner_id, 'default_journal_id': parent.journal_id, 'default_amount': abs(amount), 'default_reference': ref, 'default_date': date, 'default_name': name}"
+                    	attrs="{'invisible':[('expense_id','!=',False)]}"/>
+                </field>
+            </field>
+        </record>
+        
+        <record model='ir.ui.view' id='journal_form_view_inherit_expense'>
+			<field name='name'>account.journal.form.inherit.paybill</field>
+			<field name='model'>account.journal</field>
+			<field name='inherit_id' ref='account.view_account_journal_form'/>
+			<field name='arch' type='xml'>
+                <field name="entry_posted" position="after">
+                    <field name="is_paybill" attrs="{'invisible':[('type','not in',['cash','bank'])]}"/>
+                </field>
+			</field>
+		</record>
+		        
+	</data>
+</openerp>

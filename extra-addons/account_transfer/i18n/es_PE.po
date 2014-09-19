@@ -1,0 +1,300 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+# 	* account_transfer
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0alpha\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-01-02 20:08+0000\n"
+"PO-Revision-Date: 2013-01-04 12:29-0500\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 1.5.4\n"
+
+#. module: account_transfer
+#: help:account.transfer,dst_balance:0 help:account.transfer,src_balance:0
+msgid "Include all account moves in draft and confirmed state"
+msgstr ""
+"Confirma todos los movimientos de las cuentas en borrador y confirma el "
+"estado"
+
+#. module: account_transfer
+#: code:addons/account_transfer/account_transfer.py:118
+#, python-format
+msgid "You cannot delete a not draft transfer \"%s\""
+msgstr "No puedes eliminar una transferencia en borrador \"%s\""
+
+#. module: account_transfer
+#: help:account.transfer,origin:0
+msgid "Origin Document"
+msgstr "Documento Origen"
+
+#. module: account_transfer
+#: view:account.transfer:0 selection:account.transfer,state:0
+msgid "Confirm"
+msgstr "Confirmar"
+
+#. module: account_transfer
+#: model:ir.module.category,description:account_transfer.module_category_transfer
+msgid ""
+"Helps you manage your money transfers from bank and cash in easy and secure "
+"way."
+msgstr ""
+"Te ayuda a administrar tus transferencias de dinero desde banco y efectivo "
+"en forma fácil y segura."
+
+#. module: account_transfer
+#: field:account.transfer,exchange_inv:0
+msgid "1 / Exchange Rate"
+msgstr "1 / Exchange Rate"
+
+#. module: account_transfer
+#: field:account.transfer,state:0
+msgid "State"
+msgstr "Estado"
+
+#. module: account_transfer
+#: view:account.transfer:0 selection:account.transfer,state:0
+msgid "Draft"
+msgstr "Borrador"
+
+#. module: account_transfer
+#: view:account.transfer:0
+msgid "Details"
+msgstr "Detalles"
+
+#. module: account_transfer
+#: field:account.transfer,dst_journal_id:0
+msgid "Destinity Journal"
+msgstr "Diario Destino"
+
+#. module: account_transfer
+#: field:account.transfer,src_balance:0
+msgid "Current Source Balance"
+msgstr "Origen Balance Corriente"
+
+#. module: account_transfer
+#: field:account.transfer,exchange_rate:0
+msgid "Exchange Rate"
+msgstr "Tipo de Cambio"
+
+#. module: account_transfer
+#: field:account.transfer,src_amount:0
+msgid "Source Amount"
+msgstr "Monto Origen"
+
+#. module: account_transfer
+#: field:account.transfer,message_unread:0
+msgid "Unread Messages"
+msgstr "Mensajes No Leídos"
+
+#. module: account_transfer
+#: field:account.journal,have_partner:0
+msgid "Require Partner"
+msgstr "Requiere Socio"
+
+#. module: account_transfer
+#: field:account.transfer,company_id:0
+msgid "Company"
+msgstr "Compañia"
+
+#. module: account_transfer
+#: field:account.voucher,transfer_id:0
+#: model:ir.module.category,name:account_transfer.module_category_transfer
+msgid "Money Transfer"
+msgstr "Transferencia de Dinero"
+
+#. module: account_transfer
+#: model:ir.model,name:account_transfer.model_account_transfer
+msgid "Account Cash and Bank Transfer"
+msgstr "Cuenta de efectivo y transferencia bancaria"
+
+#. module: account_transfer
+#: model:res.groups,name:account_transfer.group_transfer_manager
+msgid "Manager"
+msgstr "Responsable"
+
+#. module: account_transfer
+#: help:account.transfer,message_ids:0
+msgid "Messages and communication history"
+msgstr "Mensajes e Historial de Comunicaciones"
+
+#. module: account_transfer
+#: help:account.transfer,adjust_move:0
+msgid "Adjust move usually by difference in the money exchange"
+msgstr ""
+"Movimiento de ajuste, usualmente por la diferencia por tipo de cambio de "
+"moneda."
+
+#. module: account_transfer
+#: field:account.transfer,message_is_follower:0
+msgid "Is a Follower"
+msgstr "Es un seguidor"
+
+#. module: account_transfer
+#: field:account.transfer,src_journal_id:0
+msgid "Source Journal"
+msgstr "Diario Origen"
+
+#. module: account_transfer
+#: field:account.transfer,date:0
+msgid "Date"
+msgstr "Fecha"
+
+#. module: account_transfer
+#: view:account.transfer:0
+msgid "Cash and Bank Transfer List"
+msgstr "Efectivo y Lista de Transferencia Bancaria"
+
+#. module: account_transfer
+#: view:account.transfer:0 selection:account.transfer,state:0
+msgid "Done"
+msgstr "Terminado"
+
+#. module: account_transfer
+#: view:account.transfer:0
+#: model:ir.actions.act_window,name:account_transfer.account_transfer_list_action
+#: model:ir.ui.menu,name:account_transfer.account_transfer_menu
+msgid "Cash and Bank Transfer"
+msgstr "Efectivo y Transferencia Bancaria"
+
+#. module: account_transfer
+#: field:account.transfer,dst_have_partner:0
+#: field:account.transfer,src_have_partner:0
+msgid "Have Partner"
+msgstr "Tiene Socio"
+
+#. module: account_transfer
+#: field:account.transfer,dst_balance:0
+msgid "Current Destinity Balance"
+msgstr "Destino Balance Corriente"
+
+#. module: account_transfer
+#: field:account.transfer,message_ids:0
+msgid "Messages"
+msgstr "Mensajes"
+
+#. module: account_transfer
+#: field:account.transfer,src_partner_id:0
+msgid "Source Partner"
+msgstr "Socio Origen"
+
+#. module: account_transfer
+#: view:account.transfer:0 field:account.transfer,voucher_ids:0
+msgid "Payments"
+msgstr "Pagos"
+
+#. module: account_transfer
+#: code:addons/account_transfer/account_transfer.py:118
+#, python-format
+msgid "User Error!"
+msgstr "Error de Usuario!"
+
+#. module: account_transfer
+#: field:account.transfer,message_summary:0
+msgid "Summary"
+msgstr "Resumen"
+
+#. module: account_transfer
+#: field:account.transfer,exchange:0
+msgid "Have Exchange"
+msgstr "Tener Intercambio"
+
+#. module: account_transfer
+#: help:account.transfer,message_unread:0
+msgid "If checked new messages require your attention."
+msgstr "Si compruebo nuevos mensajes requiere su atención."
+
+#. module: account_transfer
+#: field:account.transfer,origin:0
+msgid "Origin"
+msgstr "Origen"
+
+#. module: account_transfer
+#: field:account.transfer,dst_amount:0
+msgid "Destinity Amount"
+msgstr "Monto Destino"
+
+#. module: account_transfer
+#: field:account.transfer,dst_partner_id:0
+msgid "Destinity Partner"
+msgstr "Socio Destino"
+
+#. module: account_transfer
+#: view:account.transfer:0
+msgid "Transfer "
+msgstr "Transferir"
+
+#. module: account_transfer
+#: model:ir.model,name:account_transfer.model_account_voucher
+msgid "Accounting Voucher"
+msgstr "Comprobantes contables"
+
+#. module: account_transfer
+#: field:account.transfer,name:0
+msgid "Number"
+msgstr "Número"
+
+#. module: account_transfer
+#: field:account.transfer,adjust_move:0
+msgid "Adjust Move"
+msgstr "Ajustar Movimiento"
+
+#. module: account_transfer
+#: field:account.transfer,account_analytic_id:0
+msgid "Analytic Account"
+msgstr "Cuenta Analítica"
+
+#. module: account_transfer
+#: help:account.transfer,message_summary:0
+msgid ""
+"Holds the Chatter summary (number of messages, ...). This summary is "
+"directly in html format in order to be inserted in kanban views."
+msgstr ""
+" Contiene la tabla resumen (número de mensajes, ...). Este resumen esta "
+"directamente en formato HTML, de manera que será insertado directamente en "
+"las vistas kanban."
+
+#. module: account_transfer
+#: help:account.journal,account_transit:0
+msgid "Account used to make money transfers between bank and cash journals"
+msgstr ""
+"Cuentas usadas para hacer transferencias de dinero entre banco y diaro "
+"efectivo"
+
+#. module: account_transfer
+#: model:res.groups,name:account_transfer.group_transfer_user
+msgid "User"
+msgstr "Usuario"
+
+#. module: account_transfer
+#: view:account.transfer:0 selection:account.transfer,state:0
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: account_transfer
+#: field:account.transfer,message_follower_ids:0
+msgid "Followers"
+msgstr "Seguidores"
+
+#. module: account_transfer
+#: field:account.journal,account_transit:0
+msgid "Account Transit"
+msgstr "Cuenta de Tránsito"
+
+#. module: account_transfer
+#: model:ir.model,name:account_transfer.model_account_journal
+msgid "Journal"
+msgstr "Diario"
+
+#. module: account_transfer
+#: sql_constraint:account.transfer:0
+#: code:addons/account_transfer/account_transfer.py:108
+#, python-format
+msgid "The number must be unique!"
+msgstr "El número debe ser único!"

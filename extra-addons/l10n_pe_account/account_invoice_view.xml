@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record model="ir.ui.view" id="view_l10n_pe_account_invoice_form_inherit">
+            <field name='name'>account.invoice.l10n.pe.account.form.states.inherited</field>
+            <field name='model'>account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name='type'>form</field>
+            <field name='arch' type='xml'>
+                <field name="number" position="replace">
+                    <field name="number" class="oe_inline"/>
+                </field>
+            </field>
+        </record>
+        
+    </data>
+</openerp>

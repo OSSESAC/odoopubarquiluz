@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+  <data noupdate="1">
+
+    <!-- Account Journal -->
+    
+		<record id="account_journal_boletaserie0" model="account.journal">
+			<field name="code">B001</field>
+			<field name="name">Boleta Serie 001</field>
+			<field eval="0" name="centralisation"/>
+			<field name="view_id" ref="account.account_sp_journal_view"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="0" name="refund_journal"/>
+			<field eval="0" name="allow_date"/>
+			<field eval="0" name="entry_posted"/>
+			<field name="type">sale</field>
+			<field eval="0" name="group_invoice_lines"/>
+		</record>
+		<record id="account_journal_bcoctactepens0" model="account.journal">
+			<field name="default_debit_account_id" model="account.account" search="[('code', '=', '1041.001')]"/>
+            <field name="default_credit_account_id" model="account.account" search="[('code', '=', '1041.001')]"/>
+			<field eval="0" name="update_posted"/>
+			<field name="code">BCO01</field>
+			<field name="name">BCO. CTA CTE PEN (S/.)</field>
+			<field eval="0" name="centralisation"/>
+			<field name="view_id" ref="account.account_journal_bank_view"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="0" name="refund_journal"/>
+			<field eval="0" name="allow_date"/>
+			<field eval="0" name="entry_posted"/>
+			<field name="type">bank</field>
+			<field eval="0" name="group_invoice_lines"/>
+		</record>
+		<record id="account_journal_bconacinctadetraccionessolespens0" model="account.journal">
+			<field name="default_debit_account_id" model="account.account" search="[('code', '=', '1071.01')]"/>
+            <field name="default_credit_account_id" model="account.account" search="[('code', '=', '1071.01')]"/>
+			<field eval="0" name="update_posted"/>
+			<field name="code">BNDTR</field>
+			<field name="name">BCO. Nación Cta. DETRACCIONES Soles (PEN S./)</field>
+			<field eval="0" name="centralisation"/>
+			<field name="view_id" ref="account.account_journal_bank_view"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="0" name="refund_journal"/>
+			<field eval="0" name="allow_date"/>
+			<field eval="0" name="entry_posted"/>
+			<field name="type">bank</field>
+			<field eval="0" name="group_invoice_lines"/>
+		</record>
+		<record id="account_journal_boletadeproveedor0" model="account.journal">
+			<field eval="0" name="update_posted"/>
+			<field name="code">BP</field>
+			<field name="name">Boleta de Proveedor</field>
+			<field eval="0" name="centralisation"/>
+			<field name="view_id" ref="account.account_sp_journal_view"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="0" name="refund_journal"/>
+			<field eval="0" name="allow_date"/>
+			<field eval="0" name="entry_posted"/>
+			<field name="type">purchase</field>
+			<field eval="0" name="group_invoice_lines"/>
+		</record>
+		<record id="account_journal_cajachicapens0" model="account.journal">
+			<field name="default_debit_account_id" model="account.account" search="[('code', '=', '102.001')]"/>
+            <field name="default_credit_account_id" model="account.account" search="[('code', '=', '102.001')]"/>
+			<field eval="0" name="update_posted"/>
+			<field name="code">Cc01</field>
+			<field name="name">Caja Chica 01 PEN (S/.)</field>
+			<field eval="0" name="centralisation"/>
+			<field name="view_id" ref="account.account_journal_bank_view"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="0" name="refund_journal"/>
+			<field eval="0" name="allow_date"/>
+			<field eval="0" name="entry_posted"/>
+			<field name="type">cash</field>
+			<field eval="0" name="group_invoice_lines"/>
+		</record>
+		<record id="account_journal_comprobantederetencin0" model="account.journal">
+			<field name="default_debit_account_id" model="account.account" search="[('code', '=', '401140')]"/>
+            <field name="default_credit_account_id" model="account.account" search="[('code', '=', '401140')]"/>
+			<field eval="0" name="update_posted"/>
+			<field name="code">CRT1</field>
+			<field name="user_id" ref="base.user_admin"/>
+			<field name="name">Comprobante de Retención</field>
+			<field eval="0" name="centralisation"/>
+			<field name="view_id" ref="account.account_journal_bank_view"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="0" name="refund_journal"/>
+			<field eval="0" name="allow_date"/>
+			<field eval="0" name="entry_posted"/>
+			<field name="type">bank</field>
+			<field eval="0" name="group_invoice_lines"/>
+		</record>
+		<record id="account_journal_cajaefectivopens0" model="account.journal">
+			<field name="default_debit_account_id" model="account.account" search="[('code', '=', '101.001')]"/>
+            <field name="default_credit_account_id" model="account.account" search="[('code', '=', '101.001')]"/>
+			<field eval="0" name="update_posted"/>
+			<field name="code">EFE01</field>
+			<field name="user_id" ref="base.user_admin"/>
+			<field name="name">Caja / efectivo PEN (S/.)</field>
+			<field eval="0" name="centralisation"/>
+			<field name="view_id" ref="account.account_journal_bank_view"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="0" name="refund_journal"/>
+			<field eval="0" name="allow_date"/>
+			<field eval="0" name="entry_posted"/>
+			<field name="type">cash</field>
+			<field eval="0" name="group_invoice_lines"/>
+		</record>
+		<record id="account_journal_cajaefectivousd0" model="account.journal">
+			<field name="default_debit_account_id" model="account.account" search="[('code', '=', '101.002')]"/>
+            <field name="default_credit_account_id" model="account.account" search="[('code', '=', '101.002')]"/>
+			<field eval="0" name="update_posted"/>
+			<field name="code">EFE02</field>
+			<field name="name">Caja / efectivo USD ($)</field>
+			<field eval="0" name="centralisation"/>
+			<field name="view_id" ref="account.account_journal_bank_view"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="currency" ref="base.USD"/>
+			<field eval="0" name="refund_journal"/>
+			<field eval="0" name="allow_date"/>
+			<field eval="0" name="entry_posted"/>
+			<field name="type">cash</field>
+			<field eval="0" name="group_invoice_lines"/>
+		</record>
+		<record id="account_journal_facturaserie0" model="account.journal">
+			<field eval="0" name="update_posted"/>
+			<field name="code">F001</field>
+			<field name="name">Factura Serie 001</field>
+			<field eval="0" name="centralisation"/>
+			<field name="view_id" ref="account.account_sp_journal_view"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="0" name="refund_journal"/>
+			<field eval="0" name="allow_date"/>
+			<field eval="0" name="entry_posted"/>
+			<field name="type">sale</field>
+			<field eval="0" name="group_invoice_lines"/>
+		</record>
+		<record id="account_journal_facturadeproveedor0" model="account.journal">
+			<field eval="0" name="update_posted"/>
+			<field name="code">FP</field>
+			<field name="name">Factura de Proveedor</field>
+			<field eval="0" name="centralisation"/>
+			<field name="view_id" ref="account.account_sp_journal_view"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="0" name="refund_journal"/>
+			<field eval="0" name="allow_date"/>
+			<field eval="0" name="entry_posted"/>
+			<field name="type">purchase</field>
+			<field eval="0" name="group_invoice_lines"/>
+		</record>
+		<record id="account_journal_letrasdeproveedorsolespens0" model="account.journal">
+			<field name="default_debit_account_id" model="account.account" search="[('code', '=', '423000')]"/>
+            <field name="default_credit_account_id" model="account.account" search="[('code', '=', '423000')]"/>
+			<field eval="0" name="update_posted"/>
+			<field name="code">LP01</field>
+			<field name="name">Letras a Proveedor Soles (PEN S/.)</field>
+			<field eval="0" name="centralisation"/>
+			<field name="view_id" ref="account.account_journal_bank_view"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="0" name="refund_journal"/>
+			<field eval="0" name="allow_date"/>
+			<field eval="0" name="entry_posted"/>
+			<field name="type">bank</field>
+			<field eval="0" name="group_invoice_lines"/>
+		</record>
+		<!--record id="account_journal_letrasdeproveedordolaresusd0" model="account.journal">
+			<field name="default_debit_account_id" model="account.account" search="[('code', '=', '423000')]"/>
+            <field name="default_credit_account_id" model="account.account" search="[('code', '=', '423000')]"/>
+			<field eval="0" name="update_posted"/>
+			<field name="code">LP02</field>
+			<field name="name">Letras a Proveedor Dolares (USD $.)</field>
+			<field eval="0" name="centralisation"/>
+			<field name="view_id" ref="account.account_journal_bank_view"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="currency" ref="base.USD"/>
+			<field eval="0" name="refund_journal"/>
+			<field eval="0" name="allow_date"/>
+			<field eval="0" name="entry_posted"/>
+			<field name="type">bank</field>
+			<field eval="0" name="group_invoice_lines"/>
+		</record-->
+		<record id="account_journal_letrasdeclientesolespens0" model="account.journal">
+			<field name="default_debit_account_id" model="account.account" search="[('code', '=', '123100')]"/>
+            <field name="default_credit_account_id" model="account.account" search="[('code', '=', '123100')]"/>
+			<field eval="0" name="update_posted"/>
+			<field name="code">LT01</field>
+			<field name="name">Letras de Cliente Soles (PEN S/.)</field>
+			<field eval="0" name="centralisation"/>
+			<field name="view_id" ref="account.account_journal_bank_view"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="0" name="refund_journal"/>
+			<field eval="0" name="allow_date"/>
+			<field eval="0" name="entry_posted"/>
+			<field name="type">bank</field>
+			<field eval="0" name="group_invoice_lines"/>
+		</record>
+		<!--record id="account_journal_letrasdeclientedolaresusd0" model="account.journal">
+			<field name="default_debit_account_id" model="account.account" search="[('code', '=', '123100')]"/>
+            <field name="default_credit_account_id" model="account.account" search="[('code', '=', '123100')]"/>
+			<field eval="0" name="update_posted"/>
+			<field name="code">LT02</field>
+			<field name="name">Letras de Cliente Dolares (USD $)</field>
+			<field eval="0" name="centralisation"/>
+			<field name="view_id" ref="account.account_journal_bank_view"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field name="currency" ref="base.USD"/>
+			<field eval="0" name="refund_journal"/>
+			<field eval="0" name="allow_date"/>
+			<field eval="0" name="entry_posted"/>
+			<field name="type">bank</field>
+			<field eval="0" name="group_invoice_lines"/>
+		</record-->
+		<record id="account_journal_notadecreditoserie0" model="account.journal">
+			<field eval="0" name="update_posted"/>
+			<field name="code">NC001</field>
+			<field name="name">Nota de Credito Serie 001</field>
+			<field eval="0" name="centralisation"/>
+			<field name="view_id" ref="account.account_sp_refund_journal_view"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="1" name="refund_journal"/>
+			<field eval="0" name="allow_date"/>
+			<field name="analytic_journal_id" ref="account.analytic_journal_sale"/>
+			<field eval="0" name="entry_posted"/>
+			<field name="type">sale_refund</field>
+			<field eval="0" name="group_invoice_lines"/>
+		</record>
+		<record id="account_journal_notadecreditodeproveedor0" model="account.journal">
+			<field eval="0" name="update_posted"/>
+			<field name="code">NCP</field>
+			<field name="name">Nota de Credito de Proveedor</field>
+			<field eval="0" name="centralisation"/>
+			<field name="view_id" ref="account.account_sp_refund_journal_view"/>
+			<field name="company_id" ref="base.main_company"/>
+			<field eval="1" name="refund_journal"/>
+			<field eval="0" name="allow_date"/>
+			<field eval="0" name="entry_posted"/>
+			<field name="type">purchase_refund</field>
+			<field eval="0" name="group_invoice_lines"/>
+		</record>
+  </data>
+</openerp>

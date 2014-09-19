@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        
+        <record id="product_normal_form_view" model="ir.ui.view">
+            <field name="name">product.normal.form.inherit.related.product</field>
+            <field name="model">product.product</field>
+            <field name='inherit_id' ref='product.product_normal_form_view'/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='default_code']" position="after">
+                    <field name="parent_id"/>
+				</xpath>
+				<xpath expr="//page[@string='Inventory']" position="after">
+					<page string="Product Related">
+						<separator string="Product Tags"/>
+						<field name="related_tag_ids"/>
+						<separator string="Child Products"/>
+                    	<field name="child_ids"/>
+                   </page>
+				</xpath>
+            </field>
+        </record>
+
+    </data>
+</openerp>

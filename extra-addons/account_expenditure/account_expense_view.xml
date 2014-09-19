@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>
+	    
+	   	<record id="view_account_expense_expenditure_tree" model="ir.ui.view">
+            <field name="name">Expenditure List</field>
+            <field name="model">account.expense</field>
+            <field name="priority">30</field>
+            <field name="arch" type="xml">
+                <tree string="Expenditure List">
+                    <field name="name"/>
+                    <field name="journal_id"/>
+                    <field name="date"/>
+                    <field name="partner_id"/>
+                    <field name="amount_planed"/>
+                    <field name="amount_transfer_inv"/>
+                    <field name="amount_total"/>
+                    <field name="amount_balance"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_account_expense_expenditure_form" model="ir.ui.view">
+            <field name="name">Expenditure Form</field>
+            <field name="model">account.expense</field>
+            <field name="priority">30</field>
+            <field name="arch" type="xml">
+                <form string="Expenditure" version="7.0">
+                    <header>
+                    	<button name="expense_pre-confirm" states="draft" string="Pre-Confirm" class="oe_highlight" groups="account_expense.group_expense_user"/>
+                    	<button name="expense_confirm_transfer" states="pre-confirm" string="Confirm" class="oe_highlight" groups="account_expense.group_expense_user"/>
+                    	<button name="expense_pre-approve" states="confirm" string="Pre-Approve" class="oe_highlight" groups="account_expense.group_expense_user"/>
+                    	<button name="expense_approve" states="pre-approve" string="Approve" class="oe_highlight" groups="account_expense.group_expense_manager"/>
+                        <button name="expense_open" states="approve" string="Validate" class="oe_highlight" groups="account_expense.group_expense_manager"/>
+                        <button name="expense_paid_reverse" string="Pay" states="open" class="oe_highlight" groups="account_expense.group_expense_manager"/>
+                        <button name="expense_done" string="Done" states="paid" class="oe_highlight" groups="account_expense.group_expense_manager"/>
+                        <button name="expense_cancel" states="draft,pre-confirm" string="Cancel" groups="account_expense.group_expense_user"/>
+                        <button name="expense_cancel" states="pre-approve,approve,open,paid" string="Cancel" groups="account_expense.group_expense_manager"/>
+                        <button name="action_cancel_draft" states="cancel" string="Set to Draft" type="object" groups="account.group_account_invoice"/>
+                        <button name="%(account_expenditure.action_expense_populate_transfer)d" 
+			                	attrs="{'invisible':[('state','in',['draft','approve','open','paid','done','cancel'])]}"
+			                	groups="account_expense.group_expense_manager"
+			                	context="{'company_id':company_id,'amount_balance':amount_balance,'property_bank_journal_id':property_bank_journal_id}" 
+			                	string="Cash Transfer Advance" type="action" icon="gtk-execute"/>
+			            <button name="%(account_expenditure.action_expense_populate_transfer_back)d" 
+			                	attrs="{'invisible':[('state','in',['draft','approve','open','paid','done','cancel'])]}"
+			                	groups="account_expense.group_expense_manager" 
+			                	context="{'company_id':company_id,'amount_balance':amount_balance,'property_bank_journal_id':property_bank_journal_id}"
+			                	string="Cash Transfer Back" type="action" icon="gtk-execute"/>
+			            <field name="state" widget="statusbar" statusbar_visible="confirm,approve,open,paid,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <label string="Expenditure " attrs="{'invisible':[('name','=','/')]}"/>
+                                <field name="name" class="oe_inline" attrs="{'invisible':[('name','=','/')]}"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                            	<field name="type" invisible="1"/>
+                            	<field name="have_partner" invisible="1"/>
+                                <field name="currency_id" invisible="1" groups="base.group_multi_currency"/>
+                                <field name="journal_id" domain="[('is_expenditure','=',True),('company_id','=',company_id)]" 
+                                	on_change="onchange_journal(journal_id,exchange_rate,context)"/>
+                                <field name="partner_id" domain="[('employee','=',True)]" attrs="{'required':[('have_partner','=',True)]}"/>
+                                <field name="amount_planed" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                <field name="amount_transfer_inv" attrs="{'invisible':[('type','in',['expense','paybill']),('amount_transfer','=',0)]}" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                            </group>
+                            <group>
+                                <field name="date"/>
+                                <field name="date_end"/>
+                                <field name="account_analytic_id"/>
+                                <field name="amount_balance" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                	attrs="{'invisible':[('type','in',['expense'])]}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                        	<page string="Description">
+	                            <field name="description"/>
+	                        </page>
+                            <page string="Invoices">
+                            	<field name="invoice_ids">
+                            		<tree string="Invoices" editable="bottom">
+                            			<field name="journal_id" on_change="onchange_journal_id(journal_id,context)" 
+                            				domain="[('company_id', '=', parent.company_id),('type','in',['purchase','purchase_refund'])]"/>
+                            			<field name="date_invoice"/>
+                            			<field name="supplier_invoice_number"/>
+                            			<field name="number"/>
+                            			<field name="partner_id" on_change="onchange_partner(partner_id,context)" domain="[('supplier','=',True)]"/>
+                            			<field name="account_id" invisible="1" domain="[('type','=','payable'),('company_id','=',parent.company_id)]" groups="account.group_account_user"/>
+                            			<field name="product_id" domain="[('purchase_ok','=',True)]"
+                            				on_change="onchange_product(product_id,partner_id,context)"/>
+                            			<field name="description" invisible="0" required="1"/>
+                            			<field name="expense_account_id" required="1" groups="account.group_account_user"
+                            				domain="[('type','=','other'),('company_id','=',parent.company_id)]"/>
+                            			<field name="analytic_id" groups="analytic.group_analytic_accounting"
+                                        		domain="[('type','!=','view'), ('company_id', '=', parent.company_id)]"/>
+                                        <field name="tax_ids" widget="many2many_tags" context="{'type':'in_invoice'}"
+                                        		domain="[('parent_id','=',False),('company_id', '=', parent.company_id)]"/>
+                                        <field name="currency_id" string="" widget="selection" groups="base.group_multi_currency"/>
+                                        <field name="expense_untaxed" sum="Total Untaxed"/>
+                                        <field name="expense_total" sum="Total Amount"/>
+                                        <field name="state"/>
+                            		</tree>
+                            	</field>
+                            	<group class="oe_subtotal_footer oe_right">
+	                                <field name="amount_untaxed" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+	                                <div>
+	                                    <label for="amount_tax"/>
+	                                    <button name="button_reset_taxes" states="draft,confirm,approve,proforma2"
+	                                        string="(update)" class="oe_link oe_edit_only"
+	                                        type="object" help="Recompute taxes and total"/>
+                                	</div>
+	                                <field name="amount_tax" nolabel="1" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+	                                <field name="amount_total" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+	                                <field name="amount_statement" attrs="{'invisible':[('type','in',['expense','expenditure']),('amount_statement','=',0)]}" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+	                                <field name="amount_transfer" attrs="{'invisible':[('type','in',['expense','paybill']),('amount_transfer','=',0)]}" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+	                            </group>
+	                            <field name="notes" class="oe_inline" placeholder="Expenses Notes..."/>
+                            </page>
+                            <page string="Transfers">
+                            	<field name="transfer_ids">
+                            		<tree editable="bottom" string="Cash and Bank Transfer List">
+					                    <field name="date"/>
+					                    <field name="name"/>
+					                    <field name="src_journal_id" on_change="onchange_journal(src_journal_id,dst_journal_id,date,exchange_rate,src_amount)" domain="[('company_id', '=', parent.company_id), ('type', 'in', ['cash','bank'])]"/>
+					                    <field name="src_have_partner" invisible="1"/>
+					                    <field name="src_partner_id" attrs="{'required':[('src_have_partner','=',True)]}"/>
+					                    <field name="src_amount" on_change="onchange_amount('src_amount',src_amount,dst_amount,exchange_rate)"/>
+					                    <field name="dst_journal_id" on_change="onchange_journal(src_journal_id,dst_journal_id,date,exchange_rate,src_amount)" domain="[('company_id', '=', parent.company_id), ('is_expenditure', '=', True)]"/>
+					                    <field name="dst_have_partner" invisible="1"/>
+					                    <field name="dst_partner_id" attrs="{'required':[('dst_have_partner','=',True)]}"/>
+					                    <field name="dst_amount" on_change="onchange_amount('dst_amount',src_amount,dst_amount,exchange_rate)" sum="Total Transfer"/>
+					                    <field name="state"/>
+					                    <field name="exchange_rate" invisible="1"/>
+					                </tree>
+                            	</field>
+                            </page>
+	                        <page string="Other Info">
+	                            <group col="4">
+	                                <group name="one">
+	                                	<field name="company_id" groups="base.group_multi_company" widget="selection"/>
+	                                	<field name="exchange_rate"/>
+	                                	<field name="exchange_inv"/>
+	                                </group>
+	                                <group name="two">
+	                                	<field name="period_id" groups="account.group_account_user"/>
+                               			<field name="origin"/>
+                               			<field name="property_bank_journal_id" domain="[('type','in',['cash','bank']),('company_id','=',company_id)]"/>
+	                                </group>
+	                            </group>
+	                        </page>
+	                        <page string="Accounting" attrs="{'invisible':[('state','in',['draft','pre-confirm','confirm','pre-approve','approve','cancel'])],'readonly':[('state','in',['paid','open','done'])]}">
+                                <field name="move_ids"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+	    </record>
+
+	    <record model="ir.actions.act_window" id="account_expense_expenditure_list_action">
+		    <field name="name">Expenditures</field>
+		    <field name="res_model">account.expense</field>
+		    <field name="context">{'expense_type': 'expenditure', 'default_type': 'in_invoice', 'type': 'in_invoice', 'journal_type': 'purchase'}</field>
+		    <field name="domain">[('type','=','expenditure')]</field>
+		    <field name="view_id" eval="False"/>
+		    <field name="view_type">form</field>
+		    <field name="view_mode">tree,form</field>
+	    </record>
+	    <record id="account_expense_expenditure_list_action_view1" model="ir.actions.act_window.view">
+            <field eval="1" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_account_expense_expenditure_tree"/>
+            <field name="act_window_id" ref="account_expense_expenditure_list_action"/>
+        </record>
+        <record id="account_expense_expenditure_list_action_view2" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_account_expense_expenditure_form"/>
+            <field name="act_window_id" ref="account_expense_expenditure_list_action"/>
+        </record>
+	    <menuitem name='Expenditure' id='account_expense_expenditure_menu' parent='account_expense.account_expense_root_menu' sequence='15' action="account_expense_expenditure_list_action"/>
+	    
+	</data>
+</openerp>

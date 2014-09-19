@@ -1,0 +1,226 @@
+# Translation of OpenERP Server.
+# This file contains the translation of the following modules:
+# 	* purchase_requisition_analytic
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: OpenERP Server 7.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-01-31 15:06+0000\n"
+"PO-Revision-Date: 2013-01-31 10:13-0500\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"X-Generator: Poedit 1.5.4\n"
+
+#. module: purchase_requisition_analytic
+#: view:purchase.requisition:0
+msgid "Responsible"
+msgstr "Responsable"
+
+#. module: purchase_requisition_analytic
+#: view:purchase.requisition:0
+msgid "Purchase Done"
+msgstr "Compra Realizada"
+
+#. module: purchase_requisition_analytic
+#: view:purchase.requisition:0
+msgid "Purchase Requisition in negociation"
+msgstr "Requerimiento de Compra en Negociación"
+
+#. module: purchase_requisition_analytic
+#: field:account.analytic.account,department_id:0
+msgid "Department"
+msgstr "Departmento"
+
+#. module: purchase_requisition_analytic
+#: model:ir.model,name:purchase_requisition_analytic.model_purchase_requisition
+msgid "Purchase Requisition"
+msgstr "Solicitud de compra"
+
+#. module: purchase_requisition_analytic
+#: model:ir.model,name:purchase_requisition_analytic.model_purchase_requisition_line
+msgid "Purchase Requisition Line"
+msgstr "Línea solicitud de compra"
+
+#. module: purchase_requisition_analytic
+#: view:purchase.requisition:0
+msgid "Sent to Suppliers"
+msgstr "Cotizado"
+
+#. module: purchase_requisition_analytic
+#: field:purchase.requisition.line,description:0
+msgid "Description"
+msgstr "Descripción"
+
+#. module: purchase_requisition_analytic
+#: view:purchase.requisition:0
+msgid "Approve"
+msgstr "Aprobar"
+
+#. module: purchase_requisition_analytic
+#: code:addons/purchase_requisition_analytic/purchase_requisition.py:138
+#, python-format
+msgid "The requisition must be have an account analytic"
+msgstr "La solicitud debe tener una cuenta analítica"
+
+#. module: purchase_requisition_analytic
+#: model:res.groups,name:purchase_requisition_analytic.group_purchase_requisition_project_manager
+msgid "Project Manager"
+msgstr "Gerente de Proyecto"
+
+#. module: purchase_requisition_analytic
+#: code:addons/purchase_requisition_analytic/purchase_requisition.py:140
+#: code:addons/purchase_requisition_analytic/purchase_requisition.py:178
+#, python-format
+msgid "This user is not allowed to approve this requisition"
+msgstr "Este usuario no está autorizado a aprobar esta solicitud"
+
+#. module: purchase_requisition_analytic
+#: code:addons/purchase_requisition_analytic/purchase_requisition.py:163
+#, python-format
+msgid "The purchase order must be different than draft state"
+msgstr "La órden de compra debe ser diferente que estado en borrador"
+
+#. module: purchase_requisition_analytic
+#: code:addons/purchase_requisition_analytic/purchase_requisition.py:89
+#, python-format
+msgid ""
+"You have already one %s purchase order for this partner, you must cancel "
+"this purchase order to create a new quotation."
+msgstr ""
+"Tienes ya una orden de compra de% s para este socio, debe cancelar esta "
+"orden de compra para crear una nueva cotización."
+
+#. module: purchase_requisition_analytic
+#: field:account.analytic.account,chief_project_id:0
+#: view:purchase.requisition:0 field:purchase.requisition,chief_project_id:0
+msgid "Chief Project"
+msgstr "Jefe de Proyecto"
+
+#. module: purchase_requisition_analytic
+#: model:ir.actions.act_window,name:purchase_requisition_analytic.action_approve_purchase_requisition
+#: model:ir.ui.menu,name:purchase_requisition_analytic.menu_approve_purchase_requisition_pro_mgt
+msgid "Requisitions to Approve "
+msgstr "Solicitudes para aprobar"
+
+#. module: purchase_requisition_analytic
+#: code:addons/purchase_requisition_analytic/purchase_requisition.py:154
+#, python-format
+msgid "All purchase orders must be in draft or cancel states"
+msgstr "Todas las órdenes de compran debe estar en borrador o estado cancelado"
+
+#. module: purchase_requisition_analytic
+#: view:hr.department:0 field:hr.department,analytic_account_ids:0
+msgid "Analytic Accounts"
+msgstr "Cuentas Analíticas"
+
+#. module: purchase_requisition_analytic
+#: view:purchase.requisition:0
+msgid "Chief Unassigned"
+msgstr "Jefe sin asignar"
+
+#. module: purchase_requisition_analytic
+#: code:addons/purchase_requisition_analytic/purchase_requisition.py:176
+#, python-format
+msgid ""
+"Al least one purchase order must be in approved, confirmed or done states"
+msgstr ""
+"Al menos una órden de compra debe estar en aprobado, confirmado o estado "
+"hecho"
+
+#. module: purchase_requisition_analytic
+#: view:purchase.requisition:0
+msgid "Chief Unassigned  Requisition"
+msgstr "Solicitudes de Jefe sin asignar"
+
+#. module: purchase_requisition_analytic
+#: model:res.groups,name:purchase_requisition_analytic.group_purchase_requisition_chief
+msgid "Chief"
+msgstr "Jefe"
+
+#. module: purchase_requisition_analytic
+#: view:purchase.requisition:0
+msgid "Approved Purchase Requisition"
+msgstr "Solicitud de compra aprobada"
+
+#. module: purchase_requisition_analytic
+#: model:ir.actions.act_window,name:purchase_requisition_analytic.action_valued_purchase_requisition
+#: model:ir.ui.menu,name:purchase_requisition_analytic.menu_valued_purchase_requisition_pro_mgt
+msgid "Requisitions to Value"
+msgstr "Solicitudes a valorar"
+
+#. module: purchase_requisition_analytic
+#: code:addons/purchase_requisition_analytic/purchase_requisition.py:136
+#: code:addons/purchase_requisition_analytic/purchase_requisition.py:138
+#: code:addons/purchase_requisition_analytic/purchase_requisition.py:140
+#: code:addons/purchase_requisition_analytic/purchase_requisition.py:154
+#: code:addons/purchase_requisition_analytic/purchase_requisition.py:160
+#: code:addons/purchase_requisition_analytic/purchase_requisition.py:163
+#: code:addons/purchase_requisition_analytic/purchase_requisition.py:176
+#: code:addons/purchase_requisition_analytic/purchase_requisition.py:178
+#, python-format
+msgid "Error"
+msgstr "Error"
+
+#. module: purchase_requisition_analytic
+#: help:hr.department,analytic_account_ids:0
+msgid "Account analyticis like to cost centers"
+msgstr "Cuentas análiticas como a centro de costo"
+
+#. module: purchase_requisition_analytic
+#: code:addons/purchase_requisition_analytic/purchase_requisition.py:136
+#: code:addons/purchase_requisition_analytic/purchase_requisition.py:160
+#, python-format
+msgid "The requisition must be have almost one product"
+msgstr "La solicitud debe tener solo un producto"
+
+#. module: purchase_requisition_analytic
+#: model:ir.model,name:purchase_requisition_analytic.model_hr_department
+msgid "hr.department"
+msgstr "hr.departamento"
+
+#. module: purchase_requisition_analytic
+#: model:ir.model,name:purchase_requisition_analytic.model_account_analytic_account
+#: field:purchase.requisition,account_analytic_id:0
+msgid "Analytic Account"
+msgstr "Cuenta analítica"
+
+#. module: purchase_requisition_analytic
+#: field:hr.department,manager_user_id:0
+msgid "Manager User"
+msgstr "Usuario administrador"
+
+#. module: purchase_requisition_analytic
+#: view:purchase.requisition:0
+msgid "Reset to Draft"
+msgstr "Cambiar a borrador"
+
+#. module: purchase_requisition_analytic
+#: code:addons/purchase_requisition_analytic/purchase_requisition.py:89
+#, python-format
+msgid "Warning!"
+msgstr "Advertencia!"
+
+#. module: purchase_requisition_analytic
+#: view:purchase.requisition:0
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: purchase_requisition_analytic
+#: view:purchase.requisition:0
+msgid "Unassigned"
+msgstr "No asignado"
+
+#. module: purchase_requisition_analytic
+#: view:purchase.requisition:0
+msgid "Valued by Suppliers"
+msgstr "Cotizado por Proveedores"
+
+#. module: purchase_requisition_analytic
+#: view:purchase.requisition:0
+msgid "Valued by suppliers"
+msgstr "Cotizado por Proveedores"

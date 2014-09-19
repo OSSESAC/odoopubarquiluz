@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="expense_populate_transfer_view" model="ir.ui.view">
+             <field name="name">Populate Transfer</field>
+             <field name="model">account.expense.populate.transfer</field>
+             <field name="arch" type="xml">
+                <form string="Cash Transfer:" version="7.0">
+                	<sheet>
+	                    <group>
+	                    	<group>
+	                        	<field name="have_partner" invisible="1"/>
+	                        	<field name="company_id" invisible="1"/>
+	                        	<field name="journal_id" domain="[('type','in',['cash','bank']),('company_id','=',company_id)]" 
+	                        		string="Source Journal" on_change="onchange_journal(journal_id, context)"/>
+	                        	<field name="partner_id" string="Source Partner" 
+	                        		attrs="{'invisible':[('have_partner','=',False)], 'required':[('have_partner','=',True)]}"/>
+	                        	<field name="amount"/>
+	                        </group>
+	                        <group>
+	                        	<field name="date"/>
+	                        	<field name="currency_id"/>
+	                        </group>
+	                    </group>
+                    </sheet>
+                    <footer>
+                        <button name="populate_transfer" string="ADD" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+             </field>
+        </record>
+
+        <record id="action_expense_populate_transfer" model="ir.actions.act_window">
+             <field name="name">Cash Transfer Advance</field>
+             <field name="res_model">account.expense.populate.transfer</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">tree,form</field>
+             <field name="view_id" ref="account_expenditure.expense_populate_transfer_view"/>
+             <field name="context">{'expense_direction': 'forward','default_company_id':company_id,'default_amount':amount_balance*-1,'default_journal_id':property_bank_journal_id}</field>
+             <field name="target">new</field>
+       </record>
+       
+        <record id="expense_populate_transfer_back_view" model="ir.ui.view">
+             <field name="name">Populate Transfer Back</field>
+             <field name="model">account.expense.populate.transfer</field>
+             <field name="arch" type="xml">
+                <form string="Cash Transfer Back:" version="7.0">
+                	<sheet>
+	                    <group>
+	                    	<group>
+	                        	<field name="have_partner" invisible="1"/>
+	                        	<field name="company_id" invisible="1"/>
+	                        	<field name="journal_id" domain="[('type','in',['cash','bank']),('company_id','=',company_id)]" 
+	                        		string="Destinity Journal" on_change="onchange_journal(journal_id, context)"/>
+	                        	<field name="partner_id" string="Destinity Partner" 
+	                        		attrs="{'invisible':[('have_partner','=',False)], 'required':[('have_partner','=',True)]}"/>
+	                        	<field name="amount"/>
+	                        </group>
+	                        <group>
+	                        	<field name="date"/>
+	                        	<field name="currency_id"/>
+	                        </group>
+	                    </group>
+                    </sheet>
+                    <footer>
+                        <button name="populate_transfer" string="ADD" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+             </field>
+        </record>
+        
+       <record id="action_expense_populate_transfer_back" model="ir.actions.act_window">
+             <field name="name">Cash Transfer Back</field>
+             <field name="res_model">account.expense.populate.transfer</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">tree,form</field>
+             <field name="view_id" ref="account_expenditure.expense_populate_transfer_back_view"/>
+             <field name="context">{'expense_direction': 'back','record_id':active_id,'default_company_id':company_id,'default_amount':amount_balance,'default_journal_id':property_bank_journal_id}</field>
+             <field name="target">new</field>
+       </record>
+    </data>
+</openerp>

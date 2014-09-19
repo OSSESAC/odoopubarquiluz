@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<openerp>
+	<data>
+		
+		<record model='ir.ui.view' id='view_workflow_instance_form'>
+			<field name='name'>workflow.instance.form.inherit</field>
+			<field name='model'>workflow.instance</field>
+			<field name='inherit_id' ref='base.view_workflow_instance_form'/>
+			<field name='arch' type='xml'>
+				<xpath expr="//group" position="after">
+					<notebook>
+						<page string="Workflow Items">
+							<field name="workitem_ids"/>
+						</page>
+					</notebook>
+				</xpath>
+			</field>
+		</record>
+		
+		<record model='ir.ui.view' id='view_workflow_activity_form'>
+			<field name='name'>workflow.activity.form.inherit</field>
+			<field name='model'>workflow.activity</field>
+			<field name='inherit_id' ref='base.view_workflow_activity_form'/>
+			<field name='arch' type='xml'>
+				<xpath expr="//notebook" position="inside">
+					<page string="Workflow Items">
+						<field name="workitem_ids"/>
+					</page>
+				</xpath>
+			</field>
+		</record>
+		
+		<record model='ir.ui.view' id='view_workflow_form'>
+			<field name='name'>workflow.form.inherit</field>
+			<field name='model'>workflow</field>
+			<field name='inherit_id' ref='base.view_workflow_form'/>
+			<field name='arch' type='xml'>
+				<field name="activities" position="replace">
+					<notebook>
+						<page string="Activities">
+							<field name="activities"/>
+						</page>
+						<page string="Instances">
+							<field name="instance_ids"/>
+						</page>
+					</notebook>
+				</field>
+			</field>
+		</record>
+		
+	</data>
+</openerp>

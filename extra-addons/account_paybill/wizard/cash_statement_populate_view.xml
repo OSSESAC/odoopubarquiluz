@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+
+        <record id="cash_statement_populate_view" model="ir.ui.view">
+             <field name="name">Pay Bill Populate</field>
+             <field name="model">account.cash.statement.populate</field>
+             <field name="arch" type="xml">
+                <form string="Pay Biil" version="7.0">
+                	<sheet>
+	                    <group>
+	                    	<group>
+	                        	<field name="partner_id" on_change="onchange_partner(partner_id,expense_id,context)"/>
+	                        	<field name="amount"/>
+	                        </group>
+	                        <group>
+	                        	<field name="company_id" invisible="1"/>
+	                        	<field name="expense_id" context="{'expense_type':'paybill','expense_partner_id':partner_id}"
+	                        		domain="[('partner_id','=',partner_id),('type','=','paybill'),('state','in',['draft','confirm']),('company_id','=',company_id)]"
+	                        		on_change="onchange_expense(expense_id, context)"/>
+	                        	<field name="currency_id"/>
+	                        </group>
+	                    </group>
+                    </sheet>
+                    <footer>
+                        <button name="populate_statement" string="ADD" type="object" class="oe_highlight"/>
+                        or
+                        <button string="Cancel" class="oe_link" special="cancel"/>
+                    </footer>
+                </form>
+             </field>
+        </record>
+
+        <record id="action_cash_statement_populate" model="ir.actions.act_window">
+             <field name="name">Pay Bill Advance</field>
+             <field name="res_model">account.cash.statement.populate</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">tree,form</field>
+             <field name="view_id" ref="cash_statement_populate_view"/>
+             <field name="context">{'expense_direction': 'forward','expense_type':'paybill','default_company_id':company_id}</field>
+             <field name="target">new</field>
+       </record>
+       
+       <record id="action_cash_statement_populate_back" model="ir.actions.act_window">
+             <field name="name">Pay Bill Cash Back</field>
+             <field name="res_model">account.cash.statement.populate</field>
+             <field name="type">ir.actions.act_window</field>
+             <field name="view_type">form</field>
+             <field name="view_mode">tree,form</field>
+             <field name="view_id" ref="cash_statement_populate_view"/>
+             <field name="context">{'expense_direction': 'back','expense_type':'paybill','default_company_id':company_id}</field>
+             <field name="target">new</field>
+       </record>
+       
+    </data>
+</openerp>

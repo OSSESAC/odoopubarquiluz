@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    	<!--Expense-->
+        <record id="expense_wkf" model="workflow">
+            <field name="name">account.expense.basic</field>
+            <field name="osv">account.expense</field>
+            <field name="on_create">True</field>
+        </record>
+
+        <record id="expense_act_draft" model="workflow.activity">
+            <field name="wkf_id" ref="expense_wkf"/>
+            <field name="flow_start">True</field>
+            <field name="name">draft</field>
+        </record>
+        <record id="expense_act_pre-confirm" model="workflow.activity">
+            <field name="wkf_id" ref="expense_wkf"/>
+            <field name="name">pre-confirm</field>
+            <field name="action">write({'state':'pre-confirm'})</field>
+            <field name="kind">function</field>
+        </record>
+        <record id="expense_act_confirm" model="workflow.activity">
+            <field name="wkf_id" ref="expense_wkf"/>
+            <field name="name">confirm</field>
+            <field name="action">write({'state':'confirm'})</field>
+            <field name="kind">function</field>
+        </record>
+        <record id="expense_act_confirm_transfer" model="workflow.activity">
+            <field name="wkf_id" ref="expense_wkf"/>
+            <field name="name">confirm_transfer</field>
+            <field name="action">action_generate_transfer()
+write({'state':'confirm'})</field>
+            <field name="kind">function</field>
+        </record>
+        <record id="expense_act_pre-approve" model="workflow.activity">
+            <field name="wkf_id" ref="expense_wkf"/>
+            <field name="name">pre-approve</field>
+            <field name="action">action_pre_approve()
+write({'state':'pre-approve'})</field>
+            <field name="kind">function</field>
+        </record>
+        <record id="expense_act_approve" model="workflow.activity">
+            <field name="wkf_id" ref="expense_wkf"/>
+            <field name="name">approve</field>
+            <field name="action">action_approve()
+write({'state':'approve'})</field>
+            <field name="kind">function</field>
+        </record>
+        <record id="expense_act_open" model="workflow.activity">
+            <field name="wkf_id" ref="expense_wkf"/>
+            <field name="name">open</field>
+            <field name="action">action_open()
+write({'state':'open'})</field>
+            <field name="kind">function</field>
+        </record>
+        <record id="expense_act_paid" model="workflow.activity">
+            <field name="wkf_id" ref="expense_wkf"/>
+            <field name="name">paid</field>
+            <!--<field name="flow_stop">True</field>-->
+            <field name="action">action_paid()
+write({'state':'paid'})</field>
+            <field name="kind">function</field>
+        </record>
+        <record id="expense_act_paid_reverse" model="workflow.activity">
+            <field name="wkf_id" ref="expense_wkf"/>
+            <field name="name">paid_reverse</field>
+            <!--<field name="flow_stop">True</field>-->
+            <field name="action">action_paid()
+action_paid_reverse()
+write({'state':'paid'})</field>
+            <field name="kind">function</field>
+        </record>
+        <record id="expense_act_cancel" model="workflow.activity">
+            <field name="wkf_id" ref="expense_wkf"/>
+            <field name="name">cancel</field>
+            <field name="flow_stop">True</field>
+            <field name="action">action_cancel()
+write({'state':'cancel'})</field>
+            <field name="kind">function</field>
+        </record>
+		<record id="expense_act_done" model="workflow.activity">
+            <field name="wkf_id" ref="expense_wkf"/>
+            <field name="name">done</field>
+            <field name="action">action_done()
+validate_account_moves()
+write({'state':'done'})</field>
+            <field name="kind">function</field>
+            <field name="flow_stop">True</field>
+        </record>
+		
+        <record id="expense_transtion_draft_pre-confirm" model="workflow.transition">
+            <field name="act_from" ref="expense_act_draft"/>
+            <field name="act_to" ref="expense_act_pre-confirm"/>
+            <field name="signal">expense_pre-confirm</field>
+        </record>
+        <record id="expense_transtion_pre-confirm_confirm_transfer" model="workflow.transition">
+            <field name="act_from" ref="expense_act_pre-confirm"/>
+            <field name="act_to" ref="expense_act_confirm_transfer"/>
+            <field name="signal">expense_confirm_transfer</field>
+        </record>
+        <record id="expense_transtion_draft_confirm" model="workflow.transition">
+            <field name="act_from" ref="expense_act_draft"/>
+            <field name="act_to" ref="expense_act_confirm"/>
+            <field name="signal">expense_confirm</field>
+        </record>
+        <record id="expense_transtion_confirm_transfer_pre-approve" model="workflow.transition">
+            <field name="act_from" ref="expense_act_confirm_transfer"/>
+            <field name="act_to" ref="expense_act_pre-approve"/>
+            <field name="signal">expense_pre-approve</field>
+        </record>
+        <record id="expense_transtion_pre-approve_approve" model="workflow.transition">
+            <field name="act_from" ref="expense_act_pre-approve"/>
+            <field name="act_to" ref="expense_act_approve"/>
+            <field name="signal">expense_approve</field>
+        </record>
+        <record id="expense_transtion_confirm_approve" model="workflow.transition">
+            <field name="act_from" ref="expense_act_confirm"/>
+            <field name="act_to" ref="expense_act_approve"/>
+            <field name="signal">expense_approve</field>
+        </record>
+        <record id="expense_transtion_approve_open" model="workflow.transition">
+            <field name="act_from" ref="expense_act_approve"/>
+            <field name="act_to" ref="expense_act_open"/>
+            <field name="signal">expense_open</field>
+        </record>
+        
+        <record id="expense_transtion_draft_open" model="workflow.transition">
+            <field name="act_from" ref="expense_act_draft"/>
+            <field name="act_to" ref="expense_act_open"/>
+            <field name="signal">expense_open_expense</field>
+        </record>
+        
+        <record id="expense_transtion_open_paid" model="workflow.transition">
+            <field name="act_from" ref="expense_act_open"/>
+            <field name="act_to" ref="expense_act_paid"/>
+            <field name="signal">expense_paid</field>
+        </record>
+        <record id="expense_transtion_open_paid_reverse" model="workflow.transition">
+            <field name="act_from" ref="expense_act_open"/>
+            <field name="act_to" ref="expense_act_paid_reverse"/>
+            <field name="signal">expense_paid_reverse</field>
+        </record>
+        
+        <record id="expense_transtion_paid_done" model="workflow.transition">
+            <field name="act_from" ref="expense_act_paid"/>
+            <field name="act_to" ref="expense_act_done"/>
+            <field name="signal">expense_done</field>
+        </record>
+        <record id="expense_transtion_paid_reverse_done" model="workflow.transition">
+            <field name="act_from" ref="expense_act_paid_reverse"/>
+            <field name="act_to" ref="expense_act_done"/>
+            <field name="signal">expense_done</field>
+        </record>
+        
+        <record id="expense_transtion_draft_cancel" model="workflow.transition">
+            <field name="act_from" ref="expense_act_draft"/>
+            <field name="act_to" ref="expense_act_cancel"/>
+            <field name="signal">expense_cancel</field>
+        </record>
+        <record id="expense_transtion_pre-confirm_cancel" model="workflow.transition">
+            <field name="act_from" ref="expense_act_pre-confirm"/>
+            <field name="act_to" ref="expense_act_cancel"/>
+            <field name="signal">expense_cancel</field>
+        </record>
+        <record id="expense_transtion_confirm_cancel" model="workflow.transition">
+            <field name="act_from" ref="expense_act_confirm"/>
+            <field name="act_to" ref="expense_act_cancel"/>
+            <field name="signal">expense_cancel</field>
+        </record>
+        <record id="expense_transtion_pre-approve_cancel" model="workflow.transition">
+            <field name="act_from" ref="expense_act_pre-approve"/>
+            <field name="act_to" ref="expense_act_cancel"/>
+            <field name="signal">expense_cancel</field>
+        </record>
+        <record id="expense_transtion_approve_cancel" model="workflow.transition">
+            <field name="act_from" ref="expense_act_approve"/>
+            <field name="act_to" ref="expense_act_cancel"/>
+            <field name="signal">expense_cancel</field>
+        </record>
+        <record id="expense_transtion_open_cancel" model="workflow.transition">
+            <field name="act_from" ref="expense_act_open"/>
+            <field name="act_to" ref="expense_act_cancel"/>
+            <field name="signal">expense_cancel</field>
+        </record>
+        <record id="expense_transtion_paid_cancel" model="workflow.transition">
+            <field name="act_from" ref="expense_act_paid"/>
+            <field name="act_to" ref="expense_act_cancel"/>
+            <field name="signal">expense_cancel</field>
+        </record>
+            	
+    	
+		<!--Expense Invoice-->
+        <record id="wkf" model="workflow">
+            <field name="name">account.expense.invoice.basic</field>
+            <field name="osv">account.expense.invoice</field>
+            <field name="on_create">True</field>
+        </record>
+
+        <record id="act_draft" model="workflow.activity">
+            <field name="wkf_id" ref="wkf"/>
+            <field name="flow_start">True</field>
+            <field name="name">draft</field>
+        </record>
+
+        <record id="act_proforma2" model="workflow.activity">
+            <field name="wkf_id" ref="wkf"/>
+            <field name="name">proforma2</field>
+            <field name="action">write({'state':'proforma2'})</field>
+            <field name="kind">function</field>
+        </record>
+
+        <record id="act_open" model="workflow.activity">
+            <field name="wkf_id" ref="wkf"/>
+            <field name="name">open</field>
+            <field name="action">action_date_assign()
+action_move_create()
+action_number()
+invoice_validate()</field>
+            <field name="kind">function</field>
+        </record>
+        <record model="workflow.activity" id="act_open_test">
+            <field name="wkf_id" ref="wkf"/>
+            <field name="name">re-open</field>
+            <field name="action">write({'state':'open'})</field>
+            <field name="kind">function</field>
+           </record>
+        <record id="act_paid" model="workflow.activity">
+            <field name="wkf_id" ref="wkf"/>
+            <field name="name">paid</field>
+            <!--<field name="flow_stop">True</field>-->
+            <field name="action">confirm_paid()</field>
+            <field name="kind">function</field>
+            <field name="signal_send">subflow.paid</field>
+        </record>
+        <record id="act_cancel" model="workflow.activity">
+            <field name="wkf_id" ref="wkf"/>
+            <field name="name">cancel</field>
+            <field name="flow_stop">True</field>
+            <field name="action">action_cancel()
+write({'state':'cancel'})</field>
+            <field name="kind">function</field>
+        </record>
+
+        <record id="t4" model="workflow.transition">
+            <field name="act_from" ref="act_draft"/>
+            <field name="act_to" ref="act_open"/>
+            <field name="signal">invoice_open</field>
+        </record>
+        <record id="t8" model="workflow.transition">
+            <field name="act_from" ref="act_open"/>
+            <field name="act_to" ref="act_paid"/>
+            <field name="trigger_model">account.move.line</field>
+            <field name="trigger_expr_id">move_line_id_payment_get()</field>
+            <field name="condition">test_paid()</field>
+        </record>
+        <record id="t9" model="workflow.transition">
+            <field name="act_from" ref="act_draft"/>
+            <field name="act_to" ref="act_cancel"/>
+            <field name="signal">invoice_cancel</field>
+        </record>
+        <record id="t12" model="workflow.transition">
+            <field name="act_from" ref="act_open"/>
+            <field name="act_to" ref="act_cancel"/>
+            <field name="signal">invoice_cancel</field>
+        </record>
+        <record id="t13" model="workflow.transition">
+            <field name="act_from" ref="act_paid"/>
+            <field name="act_to" ref="act_open_test"/>
+            <field name="signal">open_test</field>
+        </record>
+        <record id="t14" model="workflow.transition">
+            <field name="act_from" ref="act_open_test"/>
+            <field name="act_to" ref="act_cancel"/>
+            <field name="signal">invoice_cancel</field>
+        </record>
+
+        <record id="open_test_to_paid" model="workflow.transition">
+            <field name="act_from" ref="act_open_test"/>
+            <field name="act_to" ref="act_paid"/>
+            <field name="trigger_model">account.move.line</field>
+            <field name="trigger_expr_id">move_line_id_payment_get()</field>
+            <field name="condition">test_paid()</field>
+        </record>
+
+        <record id="draft_to_pro2" model="workflow.transition">
+            <field name="act_from" ref="act_draft"/>
+            <field name="act_to" ref="act_proforma2"/>
+            <field name="signal">invoice_proforma2</field>
+        </record>
+
+        <record id="pro2_to_open" model="workflow.transition">
+            <field name="act_from" ref="act_proforma2"/>
+            <field name="act_to" ref="act_open"/>
+            <field name="signal">invoice_open</field>
+        </record>
+
+        <record id="pro2_to_cancel" model="workflow.transition">
+            <field name="act_from" ref="act_proforma2"/>
+            <field name="act_to" ref="act_cancel"/>
+            <field name="signal">invoice_cancel</field>
+        </record>
+    </data>
+</openerp>

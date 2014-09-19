@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>		
+
+	    <record model="ir.actions.act_window" id="customer_advance_transfer_list_action">
+		    <field name="name">Customer Advance Transfer</field>
+		    <field name="res_model">account.transfer</field>
+		    <field name="view_type">form</field>
+		    <field name="view_mode">tree,form</field>
+		    <field name="domain">[('type','=','advance_customer')]</field>
+		    <field name="context">{'type':'advance_customer'}</field>
+	    </record>
+	    <menuitem name='Customer Advance Transfer' id='customer_advance_transfer_menu' parent='account.menu_finance_bank_and_cash' sequence='20' action="customer_advance_transfer_list_action"/>
+
+	    <record model="ir.actions.act_window" id="supplier_advance_transfer_list_action">
+		    <field name="name">Supplier Advance Transfer</field>
+		    <field name="res_model">account.transfer</field>
+		    <field name="view_type">form</field>
+		    <field name="view_mode">tree,form</field>
+		    <field name="domain">[('type','=','advance_supplier')]</field>
+		    <field name="context">{'type':'advance_supplier'}</field>
+	    </record>
+	    <menuitem name='Supplier Advance Transfer' id='supplier_advance_transfer_menu' parent='account.menu_finance_bank_and_cash' sequence='30' action="supplier_advance_transfer_list_action"/>
+	    
+	    
+	</data>
+</openerp>

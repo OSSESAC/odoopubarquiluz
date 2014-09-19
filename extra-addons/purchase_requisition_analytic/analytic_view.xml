@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="account_analytic_form_inherit_req_approve">
+            <field name="name">account.analytic.form.inherit.requisition.approve</field>
+            <field name="model">account.analytic.account</field>
+            <field name="inherit_id" ref="analytic.view_account_analytic_account_form"/>
+            <field name="arch" type="xml">
+                <field name="manager_id" position="after">
+                	<field name="department_id" on_change="onchange_department(department_id)" attrs="{'invisible':[('type','not in',['contract','normal'])]}"/>
+                    <field name="chief_project_id" attrs="{'invisible':[('type','not in',['contract','normal'])]}"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</openerp>

@@ -1,0 +1,4 @@
+"id","name","model_id:id","group_id:id","perm_read","perm_write","perm_create","perm_unlink"
+access_account_einvoice,account.einvoice,model_account_einvoice,,1,0,0,0
+access_account_einvoice_user,account.einvoice user,model_account_einvoice,group_einvoice_user,1,1,1,0
+access_account_einvoice_manager,account.einvoice manager,model_account_einvoice,group_einvoice_manager,1,1,1,1

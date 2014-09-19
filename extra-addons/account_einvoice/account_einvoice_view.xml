@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+	<data>		
+		
+		<menuitem name="Electronic Invoice" id='account_einvoice_root_menu' parent='account.menu_finance' sequence="5"/>
+		<menuitem name="Electronic Invoice" id='account_einvoice_config_menu' parent='account.menu_finance_configuration' sequence="5"/>
+		
+	    <record id="view_account_ejournal_tree" model="ir.ui.view">
+            <field name="name">Electronic Journal List</field>
+            <field name="model">account.ejournal</field>
+            <field name="arch" type="xml">
+                <tree string="Electronic Journal List">
+                    <field name="name"/>
+                    <field name="type"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_account_ejournal_form" model="ir.ui.view">
+            <field name="name">Electronic Journal Form</field>
+            <field name="model">account.ejournal</field>
+            <field name="arch" type="xml">
+                <form string="Electronic Journal" version="7.0">
+                    <header>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" class="oe_inline"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="sequence_type"/>
+                                <field name="sequence_id" attrs="{'invisible':[('sequence_type','!=','normal')]}"/>
+                            </group>
+                            <group>
+                                <field name="type" invisible="1"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="comunication_type"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Financial Journals">
+                            	<field name="journal_ids" widget="one2many_list"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+	    </record>
+
+		<record id="view_account_ejournal_filter" model="ir.ui.view">
+            <field name="name">account.ejournal.filter</field>
+            <field name="model">account.ejournal</field>
+            <field name="arch" type="xml">
+                <search string="Search Electronic Journal">
+                    <field name="name" string="eJournal" filter_domain="[('name','ilike',self)]"/>
+                    <field name="journal_ids" string="Financial Journal"/>
+                    <group expand="0" string="Group By...">
+                    	<filter string="Type" icon="terp-folder-orange" domain="[]" context="{'group_by':'type'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+
+	    <record model="ir.actions.act_window" id="ejournal_list_action">
+		    <field name="name">Electronic Journal</field>
+		    <field name="res_model">account.ejournal</field>
+		    <field name="view_type">form</field>
+		    <field name="view_mode">tree,form</field>
+		    <field name="search_view_id" ref="view_account_ejournal_filter"/>
+	    </record>
+
+	    <menuitem name='Electronic Journal' id='ejournal_menu' parent='account_einvoice_config_menu' sequence='10' action="ejournal_list_action"/>
+
+	    <record id="view_account_einvoice_tree" model="ir.ui.view">
+            <field name="name">Electronic Invoice List</field>
+            <field name="model">account.einvoice</field>
+            <field name="arch" type="xml">
+                <tree string="Electronic Invoice List">
+                	<field name="date"/>
+                    <field name="name"/>
+                    <field name="type"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_account_einvoice_form" model="ir.ui.view">
+            <field name="name">Electronic Invoice Form</field>
+            <field name="model">account.einvoice</field>
+            <field name="arch" type="xml">
+                <form string="Electronic Invoice" version="7.0">
+                    <header>
+                        <button name="einvoice_draft" states="cancel" string="Draft"/>
+                        <button name="action_generate_xml" states="draft" type="object" string="Generate XML"/>
+                        <button name="action_generate_from_file" states="draft" type="object" string="Generate XML"/>
+                        <button name="einvoice_validated" states="draft" string="Validate" class="oe_highlight"/>
+                        <button name="einvoice_done" states="validated,warning" string="Done" class="oe_highlight"/>
+                        <button name="action_generate_invalidate" states="done" type="object" string="Generate Invalidate Request"/>
+                        <button name="einvoice_cancel" states="draft,validated,error" string="Cancel"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,validated,done" statusbar_colors='{"validated":"blue"}'/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <label string="eInvoice Request" attrs="{'invisible':['|',('name','=','/'),('type','=','response')]}"/>
+                                <label string="eInvoice Response" attrs="{'invisible':['|',('name','=','/'),('type','=','request')]}"/>
+                                <field name="name" class="oe_inline" attrs="{'invisible':[('name','=','/')]}"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="ejournal_id"/>
+                                <field name="date"/>
+                                <field name="file"/>
+                                <field name="ejournal_type" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="type" invisible="1"/>
+                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="parent_id" attrs="{'invisible':[('type','=','request')],'required':[('type','=','echo')]}"/>
+                                <field name="invalidate_id" attrs="{'invisible':[('type','!=','request'),('ejournal_type','!=','invalidate')]}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="XML">
+                            	<field name="xml"/>
+                            </page>
+                            <page string="Invoices">
+                                <field name="invoice_ids"/>
+                            </page>
+                            <page string="Responses" attrs="{'invisible':[('type','!=','request')]}">
+                                <field name="child_ids"/>
+                            </page>
+                            <page string="Origin Request" attrs="{'invisible':[('ejournal_type','!=','invalidate')]}">
+                                <field name="origin_ids"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+	    </record>
+
+		<record id="view_account_einvoice_filter" model="ir.ui.view">
+            <field name="name">account.einvoice.filter</field>
+            <field name="model">account.einvoice</field>
+            <field name="arch" type="xml">
+                <search string="Search Electronic Invoices">
+                    <field name="name" string="eInovice" filter_domain="[('name','ilike',self)]"/>
+                    <filter name="draft" string="Draft" domain="[('state','=','draft')]" help="Draft Electronic Invoices"/>
+                    <filter name="validated" string="Validated" domain="[('state','=','validated')]" help="Validated Electronic Invoices" groups="account_einvoice.group_einvoice_manager"/>
+                    <filter name="done" string="Done" domain="[('state','=','done')]" help="Done Electronic Invoices"/>
+                    <group expand="0" string="Group By...">
+                    	<filter string="Type" icon="terp-folder-orange" domain="[]" context="{'group_by':'type'}"/>
+                        <filter string="Date" icon="terp-go-month" domain="[]" context="{'group_by':'date'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+
+	    <record model="ir.actions.act_window" id="einvoice_request_list_action">
+		    <field name="name">Request eInvoice</field>
+		    <field name="res_model">account.einvoice</field>
+		    <field name="view_type">form</field>
+		    <field name="view_mode">tree,form</field>
+		    <field name="domain">[('type','=','request')]</field>
+		    <field name="context">{'default_type':'request'}</field>
+		    <field name="search_view_id" ref="view_account_einvoice_filter"/>
+	    </record>
+	    <record model="ir.actions.act_window" id="einvoice_response_list_action">
+		    <field name="name">Response eInvoice</field>
+		    <field name="res_model">account.einvoice</field>
+		    <field name="view_type">form</field>
+		    <field name="view_mode">tree,form</field>
+		    <field name="domain">[('type','=','response')]</field>
+		    <field name="context">{'default_type':'response'}</field>
+		    <field name="search_view_id" ref="view_account_einvoice_filter"/>
+	    </record>
+
+	    <menuitem name='eInvoice Requested' id='einvoice_request_menu' parent='account_einvoice_root_menu' sequence='10' action="einvoice_request_list_action"/>
+	    <menuitem name='eInvoice Responsed' id='einvoice_response_menu' parent='account_einvoice_root_menu' sequence='20' action="einvoice_response_list_action"/>
+	    
+	</data>
+</openerp>
